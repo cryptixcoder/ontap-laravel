@@ -13,9 +13,9 @@ export default function PurchaseProjectButton() {
             onSuccess: (page) => {
                 const sessionURL = page.props.url;
 
-                if(sessionURL) {
-                    window.location.href = sessionURL;
-                }
+                // if(sessionURL) {
+                //     window.location.href = sessionURL;
+                // }
             },
             onError: () => {
                 setLoading(false)
