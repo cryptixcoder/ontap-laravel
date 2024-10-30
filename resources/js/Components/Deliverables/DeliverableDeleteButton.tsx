@@ -1,16 +1,13 @@
-"use client"
 import { TrashIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import { Button } from '../ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
-import { deleteDeliverable } from '@/actions/deliverable';
-import { DeleteDeliverableButtonProps } from '@/types/deliverable';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '@/Components/ui/dialog';
 
-export default function DeliverableDeleteButton({ id }:DeleteDeliverableButtonProps) {
+export default function DeliverableDeleteButton({ id }:{id:string}) {
     const [isOpen, setIsOpen ] = useState(false)
 
     const handleDelete = async () => {
-        await deleteDeliverable(id);
+
         setIsOpen(false);
     }
 
@@ -31,13 +28,13 @@ export default function DeliverableDeleteButton({ id }:DeleteDeliverableButtonPr
                             </DialogDescription>
                         </DialogHeader>
                         <div className="mt-4 flex justify-end space-x-2">
-                            <button 
+                            <button
                                 className="bg-gray-200 text-gray-800 py-2 px-4 rounded"
                                 onClick={() => setIsOpen(false)}
                             >
                                 Cancel
                             </button>
-                            <button  
+                            <button
                                 className="bg-red-500 text-white py-2 px-4 rounded"
                                 onClick={handleDelete}
                             >

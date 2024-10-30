@@ -1,8 +1,7 @@
-import DeliverableForm from '../forms/deliverable/DeliverableForm';
+import DeliverableForm from './DeliverableForm';
 import DeliverableFeed from './DeliverableFeed';
-import { DeliverablesProps } from '@/types/deliverable';
 
-export default function Deliverables({ id, deliverables, allowUploads = false }:DeliverablesProps) {
+export default function Deliverables({ id, deliverables, allowUploads = false }:{id:string, deliverables: any[], allowUploads?: boolean}) {
     return (
         <div className="my-4">
             <DeliverableForm id={id} allowUploads={allowUploads} />

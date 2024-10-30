@@ -1,67 +1,45 @@
-"use client"
-
 import { useRef, useState } from 'react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/Components/ui/button'
 import { PaperClipIcon } from '@heroicons/react/24/solid'
-import { DeliverableFormProps } from '@/types/deliverable'
-import { useRouter } from 'next/navigation';
+import { useForm, router } from '@inertiajs/react';
 
-
-export default function DeliverableForm({ id, allowUploads = false }:DeliverableFormProps) {
+export default function DeliverableForm({ id, allowUploads = false }:{ id: string, allowUploads?: boolean }) {
+    const inputRef = useRef<HTMLInputElement|null>(null);
     const [progress, setProgress] = useState<number>(0);
     const [processing, setProcessing] = useState<boolean>(false);
-    const inputRef = useRef<HTMLInputElement|null>(null);
-    const router = useRouter();
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
         const file = e.target.files?.[0];
-        
-        if(file) {
-            uploadFile(file);
-        }
-    }
+        if (!file) return;
 
-    const uploadFile = async (file: File) => {
         setProcessing(true);
-        
         const formData = new FormData();
-
         formData.append('file', file);
-        formData.append('id', id);
-        formData.append('object', 'deliverable');
 
-        try {
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', '/api/upload', true);
+        router.post(route(`/deliverable/${id}`), formData, {
+            preserveScroll: true,
+            onProgress: (e) => {
 
-            xhr.upload.onprogress = (event) => {
-                if(event.lengthComputable) {
-                    const percentComplete = (event.loaded / event.total) * 100;
-                    setProgress(percentComplete)
-                }
-            };
+            },
+            onSuccess: (e) => {
 
-            xhr.onload = () => {
-                if(xhr.status === 200) {
-                    setProgress(0)
-                    setProcessing(false)
-                    router.refresh()
-                }
-                else {
-                    alert("File upload failed!")
-                }
+            },
+            onError: (e) => {
+
             }
-
-            xhr.send(formData);
-        }
-        catch(error: any) {
-            console.log(error.message)
-        }
+        })
     }
 
-    const handleClick = () => {
+    function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+        e.preventDefault();
         inputRef.current?.click();
     }
+
+    function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+        handleUpload(e);
+    }
+
 
     return (
         <div>

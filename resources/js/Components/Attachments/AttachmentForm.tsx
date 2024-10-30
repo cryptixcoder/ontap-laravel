@@ -7,7 +7,7 @@ import { useForm, router } from '@inertiajs/react';
 export default function AttachmentForm({ id, type }:{ id: string, type: string }) {
     const inputRef = useRef<HTMLInputElement|null>(null);
     const [ progress, setProgress ] = useState(0);
-    const [ file, setFile ] = useState(null);
+    const [ file, setFile ] = useState<File|null>(null);
 
     const handleUpload = (file: File) => {
         const formData = new FormData();
@@ -30,7 +30,7 @@ export default function AttachmentForm({ id, type }:{ id: string, type: string }
     }
 
     const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-        const uploadedFile = e.target.files[0];
+        const uploadedFile = e.target.files?.[0];
 
         if (uploadedFile) {
             setFile(uploadedFile);

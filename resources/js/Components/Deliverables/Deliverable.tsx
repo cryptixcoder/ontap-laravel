@@ -1,9 +1,8 @@
 import { ArrowDownTrayIcon, DocumentTextIcon } from '@heroicons/react/24/outline'
-import Link from 'next/link'
+import {Link} from '@inertiajs/react'
 import DeliverableDeleteButton from './DeliverableDeleteButton';
-import { DeliverableProps } from '@/types/deliverable';
 
-export default function Deliverable({ deliverable }:DeliverableProps) {
+export default function Deliverable({ deliverable }: {deliverable: any}) {
     return (
         <div className="bg-white border rounded-md p-4 flex justify-between">
             <div className="flex items-center">

@@ -7,6 +7,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\DeliverableController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,9 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/attachment', [AttachmentController::class, 'store'])->name('attachment.store');
     Route::delete('/attachment/{attachment}', [AttachmentController::class, 'destroy'])->name('attachment.delete');
+
+    Route::post('/deliverable/{project}', [DeliverableController::class, 'store'])->name('deliverable.store');
+    Route::delete('/deliverable/{deliverable}', [DeliverableController::class, 'destroy'])->name('deliverable.delete');
 
     Route::get('/projects', [ProjectController::class, 'index'])->name('project.index');
     Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('project.show');

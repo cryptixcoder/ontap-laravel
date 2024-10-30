@@ -1,7 +1,7 @@
 import Deliverable from './Deliverable';
-import { DeliverableFeedProps } from '@/types/deliverable';
 
-export default function DeliverableFeed({ deliverables }:DeliverableFeedProps) {
+
+export default function DeliverableFeed({ deliverables }:{ deliverables: any[] }) {
     return (
         <div>
             {deliverables?.length > 0 ? (
