@@ -5,6 +5,8 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +26,13 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+
+    Route::name('admin.')->prefix('admin')->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+
+        Route::get('/customers', [CustomerController::class, 'index'])->name('customer.index');
+        Route::get('/customers/{customer}', [CustomerController::class, 'show'])->name('customer.show');
+    });
 
     Route::get('/tasks', [TaskController::class, 'index'])->name('task.index');
     Route::get('/tasks/{task}', [TaskController::class, 'edit'])->name('task.edit');
