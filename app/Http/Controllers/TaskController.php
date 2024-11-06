@@ -11,9 +11,10 @@ class TaskController extends Controller
 {
     public function index(Request $request){
         $organization = $request->user()->organization;
-
+        $plan = $organization->plan;
+        $isSubscribed = $organization->subscribed('default');
+        $isPaused = $organization->subscribed() && $organization->subscription('default')->paused();
         $tasks = $organization->tasks()->orderBy('position', 'asc')->get();
-
         $initialStatuses = ["Not Started", "To Do", "Awaiting Feedback", "Revisions Needed", "Done"];
 
         // Create an empty array grouped by statuses
@@ -39,7 +40,10 @@ class TaskController extends Controller
         })->values()->toArray();
 
         return Inertia::render('Task/Tasks', [
-            'tasks' => $result
+            'tasks' => $result,
+            'isSubscribed' => $isSubscribed,
+            'isPaused' => $isPaused,
+            'plan' => $plan
         ]);
     }
 

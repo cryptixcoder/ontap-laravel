@@ -11,7 +11,8 @@ class Organization extends Model
 
     protected $fillable = [
         'name',
-        'owner_id'
+        'owner_id',
+        'plan_id'
     ];
 
     public function owner(){
@@ -32,5 +33,9 @@ class Organization extends Model
 
     public function invites(){
         return $this->hasMany(Invite::class);
+    }
+
+    public function plan(){
+        return $this->belongsTo(Plan::class);
     }
 }

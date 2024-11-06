@@ -37,7 +37,7 @@ class ProjectController extends Controller
 
     public function show(Project $project) {
         return Inertia::render('Project/ViewProject', [
-            'project' => $project
+            'project' => $project->load(['product.questions', 'attachments', 'deliverables', 'comments', 'responses.question'])
         ]);
     }
 
@@ -57,5 +57,28 @@ class ProjectController extends Controller
         }
 
         return Inertia::location($session->url);
+    }
+
+    public function onboard(Request $request, Project $project) {
+        $validated = $request->validate([
+            'title' => 'required',
+            'responses' => 'required|array',
+            'responses.*.questionId' => 'required|integer',
+            'responses.*.response' => 'required',
+        ]);
+
+        foreach ($validated['responses'] as $responseData) {
+            $project->responses()->create([
+                'product_question_id' => $responseData['questionId'],
+                'response' => $responseData['response'],
+            ]);
+        }
+
+        $project->update([
+            'title' => $validated['title'],
+            'status' => 'In Progress',
+        ]);
+
+        return redirect()->back();
     }
 }

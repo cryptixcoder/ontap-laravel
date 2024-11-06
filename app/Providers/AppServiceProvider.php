@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Organization;
+use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Vite;
@@ -26,6 +27,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Vite::prefetch(concurrency: 3);
         Cashier::useCustomerModel(Organization::class);
+
+        Cashier::useSubscriptionModel(Subscription::class);
 
         Gate::define('viewPulse', function (User $user) {
             return true;

@@ -7,6 +7,8 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\PlanController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\DeliverableController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Foundation\Application;
@@ -33,6 +35,15 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/customers', [CustomerController::class, 'index'])->name('customer.index');
         Route::get('/customers/{customer}', [CustomerController::class, 'show'])->name('customer.show');
+
+        Route::get('/plans', [PlanController::class, 'index'])->name('plan.index');
+        Route::post('/plans/create', [PlanController::class, 'store'])->name('plan.store');
+        Route::put('/plans/{plan}', [PlanController::class, 'update'])->name('plan.update');
+
+        Route::get('/products', [ProductController::class, 'index'])->name('product.index');
+        Route::post('/products/create', [ProductController::class, 'store'])->name('product.store');
+        Route::put('/products/{product}', [ProductController::class, 'update'])->name('product.update');
+        Route::post('/products/{product}/questions', [ProductController::class, 'storeQuestions'])->name('product.store.questions');
     });
 
     Route::get('/tasks', [TaskController::class, 'index'])->name('task.index');
@@ -52,10 +63,14 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/projects', [ProjectController::class, 'index'])->name('project.index');
     Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('project.show');
+    Route::post('/projects/{project}/onboard', [ProjectController::class, 'onboard'])->name('project.onboard');
     Route::post('/projects/checkout', [ProjectController::class, 'checkout'])->name('project.checkout');
 
     Route::get('/subscription', [SubscriptionController::class, 'index'])->name('subscription.index');
-
+    Route::get('/subscription/billing', [SubscriptionController::class, 'manageBilling'])->name('subscription.billing');
+    Route::post('/subscription/pause', [SubscriptionController::class, 'pause'])->name('subscription.pause');
+    Route::post('/subscription/resume', [SubscriptionController::class, 'resume'])->name('subscription.resume');
+    Route::post('/subscription/checkout', [SubscriptionController::class, 'createCheckoutSession'])->name('subscription.checkout');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

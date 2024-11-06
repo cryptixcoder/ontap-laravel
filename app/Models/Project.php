@@ -12,7 +12,8 @@ class Project extends Model
         'type',
         'status',
         'stripe_session_id',
-        'stripe_status'
+        'stripe_status',
+        'product_id'
     ];
 
     public function comments(){
@@ -25,5 +26,13 @@ class Project extends Model
 
     public function deliverables() {
         return $this->morphMany(Deliverable::class, 'deliverable');
+    }
+
+    public function responses() {
+        return $this->hasMany(ProductResponse::class);
+    }
+
+    public function product(){
+        return $this->belongsTo(Product::class);
     }
 }
