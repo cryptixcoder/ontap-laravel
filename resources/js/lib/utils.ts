@@ -9,3 +9,10 @@ export function cn(...inputs: ClassValue[]) {
 export const timeAgo = (date: Date) => {
   return formatDistanceToNow(date, { addSuffix: true});
 }
+
+export const getInitials = (name: string) => {
+    return name
+            .split(" ")
+            .map((word) => word.charAt(0).toUpperCase())
+            .join("");
+}

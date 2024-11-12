@@ -21,8 +21,10 @@ export default function ViewTask({ task }: PageProps<{task: any}>) {
             <div className="py-12 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="w-full h-full pb-8">
                     <EditTaskForm task={task} />
-                    <Attachments id={task.id} type='task' attachments={task.attachments} />
-                    <Comments id={task.id} type="task" comments={task.comments} />
+                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg p-4 space-y-8 mt-8">
+                        <Attachments id={task.id} type='task' attachments={task.attachments} />
+                        <Comments id={task.id} type="task" comments={task.comments} />
+                    </div>
                 </div>
             </div>
         </AuthenticatedLayout>

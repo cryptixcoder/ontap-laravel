@@ -50,7 +50,7 @@ export default function ViewProject({project}:{project:any}) {
                                     </div>
                                     <div>
                                         <h3 className="text-sm font-semibold mb-2">Expected Delivery Date</h3>
-                                        <p>{project.product.name}</p>
+                                        <p>{new Date(project.delivery_at)?.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                                     </div>
                                     <div>
                                         <ProjectStatusBadge status={project.status} />
@@ -69,9 +69,11 @@ export default function ViewProject({project}:{project:any}) {
                                 </div>
                             </div>
                             <div className="col-span-8 space-y-4">
-                                <Attachments id={project.id} type="project" attachments={project.attachments} />
-                                <Deliverables id={project.id} deliverables={project.deliverables} />
-                                <Comments id={project.id} type="project" comments={project.comments} />
+                                <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg p-4 space-y-8">
+                                    <Attachments id={project.id} type="project" attachments={project.attachments} />
+                                    <Deliverables id={project.id} deliverables={project.deliverables} />
+                                    <Comments id={project.id} type="project" comments={project.comments} />
+                                </div>
                             </div>
                         </div>
                     )}

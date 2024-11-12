@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\Notification;
 
 class User extends Authenticatable
 {
@@ -21,7 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'organization_id'
+        'organization_id',
+        'role'
     ];
 
     /**
@@ -47,7 +49,15 @@ class User extends Authenticatable
         ];
     }
 
+    public function routeNotificationForSlack(Notification $notification) {
+        return "#ontap-admin";
+    }
+
     public function organization() {
         return $this->belongsTo(Organization::class, 'organization_id');
+    }
+
+    public function projects() {
+        return $this->hasMany(Project::class, 'assigned_user_id');
     }
 }

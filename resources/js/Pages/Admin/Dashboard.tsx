@@ -1,11 +1,18 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Card, CardContent, CardHeader } from '@/Components/ui/card';
+import MRR from '@/Components/Admin/MRR';
+import { Link, usePage } from '@inertiajs/react';
+import ProjectStatusBadge from '@/Components/Project/ProjectStatusBadge';
+import { EllipsisVerticalIcon } from '@heroicons/react/24/solid';
+import { Button } from '@/Components/ui/button';
 
-export default function Dashboard() {
+export default function Dashboard({ projects }: { projects: any[]}) {
+    const { auth } = usePage().props
     return (
         <AdminLayout>
-            <div className='mt-4 space-y-4 container mx-auto h-full'>
-              {/* <MRR mrr={formatter.format(analytics.mrr.total ? analytics.mrr.total.toNumber()/100: 0)} percentage={analytics.mrr.percentage} chartData={analytics.mrr.chart} /> */}
+            { auth.user.role === 'admin' && (
+                <div className='mt-4 space-y-4 container mx-auto h-full'>
+              <MRR />
               <div className="grid grid-cols-4 gap-4">
                 <Card>
                   <CardHeader>
@@ -72,6 +79,35 @@ export default function Dashboard() {
                   </CardContent>
                 </Card>
               </div>
+            </div>
+            ) }
+            <div className='mt-8 space-y-4 container mx-auto h-full'>
+                <div>
+                    <h3 className="font-semibold text-sm mb-4">Assign Projects</h3>
+
+                    <div className="space-y-4">
+                        {projects.map((project) => (
+                            <Link className="block" href={route('admin.customer.project.show', { organization: project.organization_id, project: project.id })}>
+                                <div className="flex justify-between items-center w-full bg-white border p-4 rounded-md">
+                                    <div>
+                                        <h6 className="text-xs font-medium">{project.title}</h6>
+                                        <p className="text-xs">{new Date(project.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <div className="flex gap-1 items-center w-36">
+                                            <ProjectStatusBadge status={project.status} />
+                                        </div>
+                                        <div>
+                                            <Button variant="ghost">
+                                                <EllipsisVerticalIcon className="w-[16px]" />
+                                            </Button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
             </div>
         </AdminLayout>
     )

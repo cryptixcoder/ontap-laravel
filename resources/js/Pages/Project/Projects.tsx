@@ -1,9 +1,40 @@
 import ProjectCard from '@/Components/Project/ProjectCard';
 import PurchaseProjectButton from '@/Components/Project/PurchaseProjectButton';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/Components/ui/sheet"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs"
 
-export default function Projects({ projects }: { projects: any[]}) {
+import { Head } from '@inertiajs/react';
+import { Button } from '@/Components/ui/button';
+
+type Product = {
+    id: string;
+    name: string;
+    price: number;
+    description: string;
+    stripe_price_id: string;
+}
+
+type Category = {
+    id: string;
+    name: string;
+    products: Product[];
+}
+
+const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+});
+
+
+export default function Projects({ projects, categories }: { projects: any[], categories: Category[] }) {
     return (
         <AuthenticatedLayout
             header={
@@ -12,7 +43,51 @@ export default function Projects({ projects }: { projects: any[]}) {
                         Projects
                     </h2>
 
-                    <PurchaseProjectButton />
+                    <Sheet>
+                        <SheetTrigger asChild>
+                            <Button>
+                                Buy Project Sprint
+                            </Button>
+                        </SheetTrigger>
+                        <SheetContent>
+                            <SheetHeader>
+                                <SheetTitle>Project Sprints</SheetTitle>
+                                <SheetDescription>
+                                    Choose the best project sprint for your needs.
+                                </SheetDescription>
+                            </SheetHeader>
+
+                            <div className="my-8">
+                                <Tabs defaultValue={categories[1]?.id.toString()} className="w-full">
+                                    <TabsList className="w-full flex-wrap h-auto">
+                                        {categories.map((cat) => (
+                                            <TabsTrigger key={cat.id} value={cat.id.toString()} >{cat.name}</TabsTrigger>
+                                        ))}
+                                    </TabsList>
+                                    <div className="mt-4">
+                                        {categories.map((cat) => (
+                                            <TabsContent key={cat.id} value={cat.id.toString()} className="space-y-8">
+                                                {cat.products.map((product) => (
+                                                    <div className="space-y-2 border p-4 rounded-md shadow-sm">
+                                                        <div className="flex items-center justify-between">
+                                                            <h3 className="font-semibold text-lg mb-2">{product.name}</h3>
+                                                            <div>
+                                                                <p>{formatter.format(product.price)}</p>
+                                                            </div>
+                                                        </div>
+                                                        <p className="text-sm text-gray-600">{product.description}</p>
+                                                        <PurchaseProjectButton priceId={product.stripe_price_id}>
+                                                            {product.name}
+                                                        </PurchaseProjectButton>
+                                                    </div>
+                                                ))}
+                                            </TabsContent>
+                                        ))}
+                                    </div>
+                                </Tabs>
+                            </div>
+                        </SheetContent>
+                    </Sheet>
                 </div>
             }
         >

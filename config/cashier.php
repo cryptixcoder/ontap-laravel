@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Webhook\StripeWebhookController;
 use Laravel\Cashier\Console\WebhookCommand;
 use Laravel\Cashier\Invoices\DompdfInvoiceRenderer;
 
@@ -46,6 +47,7 @@ return [
 
     'webhook' => [
         'secret' => env('STRIPE_WEBHOOK_SECRET'),
+        'controller' => App\Http\Controllers\Webhook\StripeWebhookController::class,
         'tolerance' => env('STRIPE_WEBHOOK_TOLERANCE', 300),
         'events' => WebhookCommand::DEFAULT_EVENTS,
     ],

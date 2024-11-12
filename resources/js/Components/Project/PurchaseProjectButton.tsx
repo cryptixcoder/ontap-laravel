@@ -5,11 +5,11 @@ import { router } from '@inertiajs/react';
 
 // const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
 
-export default function PurchaseProjectButton() {
+export default function PurchaseProjectButton({priceId, children}:{priceId: string, children: React.ReactNode}) {
     const [ loading, setLoading ] = useState(false);
 
     const handleClick = async () => {
-        router.post(route('project.checkout'),{}, {
+        router.post(route('project.checkout'),{ priceId }, {
             onSuccess: (page) => {
                 const sessionURL = page.props.url;
 
@@ -25,7 +25,7 @@ export default function PurchaseProjectButton() {
 
     return (
         <Button variant="outline" onClick={handleClick} disabled={loading}>
-            { loading ? "Processing" : "Buy Sprint" }
+            { loading ? "Processing" : `Buy ${children}` }
         </Button>
     )
 }

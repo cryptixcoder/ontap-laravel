@@ -39,18 +39,28 @@ export default function AdminLayout({
                                 >
                                     Customers
                                 </NavLink>
-                                <NavLink
-                                    href={route('admin.plan.index')}
-                                    active={route().current('admin.plan.index')}
-                                >
-                                    Plans
-                                </NavLink>
-                                <NavLink
-                                    href={route('admin.product.index')}
-                                    active={route().current('admin.product.index')}
-                                >
-                                    Products
-                                </NavLink>
+                                { user.role === 'admin' && (
+                                    <>
+                                        <NavLink
+                                            href={route('admin.plan.index')}
+                                            active={route().current('admin.plan.index')}
+                                        >
+                                            Plans
+                                        </NavLink>
+                                        <NavLink
+                                            href={route('admin.product.index')}
+                                            active={route().current('admin.product.index')}
+                                        >
+                                            Products
+                                        </NavLink>
+                                        <NavLink
+                                            href={route('admin.team.index')}
+                                            active={route().current('admin.team.index')}
+                                        >
+                                            Team
+                                        </NavLink>
+                                    </>
+                                )}
                             </div>
                         </div>
 
@@ -150,8 +160,8 @@ export default function AdminLayout({
                 >
                     <div className="space-y-1 pb-3 pt-2">
                         <ResponsiveNavLink
-                            href={route('dashboard')}
-                            active={route().current('dashboard')}
+                            href={route('admin.dashboard.index')}
+                            active={route().current('admin.dashboard.index')}
                         >
                             Dashboard
                         </ResponsiveNavLink>

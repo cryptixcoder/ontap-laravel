@@ -13,11 +13,21 @@ class Project extends Model
         'status',
         'stripe_session_id',
         'stripe_status',
-        'product_id'
+        'product_id',
+        'delivery_at',
+        'assigned_user_id'
+    ];
+
+    protected $casts = [
+        'delivery_at' => 'datetime'
     ];
 
     public function comments(){
-        return $this->morphMany(Comment::class, 'commentable');
+        return $this->morphMany(Comment::class, 'commentable')->with('user');
+    }
+
+    public function assignedUser() {
+        return $this->belongsTo(User::class, 'assigned_user_id');
     }
 
     public function attachments(){

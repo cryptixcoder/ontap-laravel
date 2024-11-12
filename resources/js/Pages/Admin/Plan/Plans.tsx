@@ -39,6 +39,7 @@ export default function Plans({ plans }:{ plans: any[] }) {
     const { data, setData, post, put, reset } = useForm({
         name: '',
         description: '',
+        stripe_statement_descriptor:'',
         price: '',
         features: '',
         limit: "0",
@@ -67,12 +68,10 @@ export default function Plans({ plans }:{ plans: any[] }) {
                 },
             });
         }
-
-
     }
 
     return (
-        <AdminLayout>
+        <AdminLayout header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Manage Plans</h2>}>
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="mb-4 flex items-center justify-end">
@@ -145,6 +144,16 @@ export default function Plans({ plans }:{ plans: any[] }) {
                                                     placeholder="Enter product limit"
                                                 />
                                             </div>
+                                            <div className="mb-2">
+                                                <label>Statement Descriptor</label>
+                                                <Input
+                                                    id="stripe_statement_descriptor"
+                                                    name="stripe_statement_descriptor"
+                                                    value={data.stripe_statement_descriptor}
+                                                    onChange={(e) => setData('stripe_statement_descriptor', e.target.value)}
+                                                    placeholder="Description for CC statement"
+                                                />
+                                            </div>
                                             <Button>
                                                 {editing ? 'Update' : 'Create'}
                                             </Button>
@@ -177,7 +186,12 @@ export default function Plans({ plans }:{ plans: any[] }) {
                                                         variant="outline"
                                                         size="sm"
                                                         onClick={() => {
-                                                            setData(plan)
+                                                            setData({
+                                                                ...plan,
+                                                                description: plan.description ? plan.description : '',
+                                                                features: plan.features ? plan.features : '',
+                                                                stripe_statement_descriptor: plan.stripe_statement_descriptor ? plan.stripe_statement_descriptor : '',
+                                                            })
                                                             setEditing(plan)
                                                             setOpen(true)
                                                         }}

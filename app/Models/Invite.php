@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class Invite extends Model
@@ -11,6 +12,19 @@ class Invite extends Model
         'role',
         'token'
     ];
+
+    protected static function boot() {
+        parent::boot();
+
+        static::creating(function ($invite) {
+            do {
+                $token = Str::random(32);
+            }
+            while(self::where('token', Str::random(32))->exists());
+
+            $invite->token = $token;
+        });
+    }
 
     public function organization(){
         return $this->belongsTo(Organization::class);

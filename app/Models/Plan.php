@@ -13,6 +13,7 @@ class Plan extends Model
         'limit',
         'sprint_product_id',
         'stripe_price_id',
+        'stripe_statement_descriptor',
         'price',
     ];
 

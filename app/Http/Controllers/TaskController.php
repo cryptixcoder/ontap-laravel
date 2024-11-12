@@ -70,6 +70,8 @@ class TaskController extends Controller
             'position' => $position,
         ]);
 
+        // TODO: send slack notification
+
         return to_route('task.index');
     }
 
@@ -78,6 +80,13 @@ class TaskController extends Controller
             'status' => $request->status,
             'position' => $request->position
         ]);
+
+        if($request->admin) {
+            return to_route('admin.customer.task.show',[
+                'organization' => $task->organization_id,
+                'task' => $task->id
+            ]);
+        }
 
         return to_route('task.index');
     }

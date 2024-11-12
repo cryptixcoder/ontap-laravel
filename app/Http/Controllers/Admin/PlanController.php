@@ -29,13 +29,15 @@ class PlanController extends Controller
             'description' => 'required',
             'price' => 'required',
             'features' => 'required',
-            'limit' => 'required|integer'
+            'limit' => 'required|integer',
+            'stripe_statement_descriptor' => 'nullable'
         ]);
 
 
         $stripeProduct = $this->stripe->products->create([
             'name' => $validated['name'],
             'description' => $validated['description'],
+            'statement_descriptor' => $validated['stripe_statement_descriptor']
         ]);
 
         $stripePrice = $this->stripe->prices->create([
@@ -61,14 +63,21 @@ class PlanController extends Controller
             'name' => 'required',
             'description' => 'required',
             'price' => 'required',
-            'features' => 'required',
-            'limit' => 'required|integer'
+            'features' => 'nullable',
+            'limit' => 'required|integer',
+            'stripe_statement_descriptor' => 'nullable'
         ]);
 
-        $this->stripe->products->update($plan->stripe_product_id, [
-            'name' => $validated['name'],
-            'description' => $validated['description'],
-        ]);
+        try {
+            $this->stripe->products->update($plan->stripe_product_id, [
+                'name' => $validated['name'],
+                'description' => $validated['description'],
+                'statement_descriptor' => $validated['stripe_statement_descriptor']
+            ]);
+        }
+        catch(\Exception $e) {
+            dd($e->getMessage());
+        }
 
         if($validated['price'] * 100 !== $plan->price * 100) {
             $stripePrice = $this->stripe->prices->create([

@@ -4,8 +4,6 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { PageProps } from '@/types';
 import { Head } from '@inertiajs/react';
 
-
-
 export default function Tasks({ tasks, isSubscribed, isPaused }:PageProps<{tasks?: any, isSubscribed?: boolean, isPaused?: boolean}>) {
     return (
         <AuthenticatedLayout

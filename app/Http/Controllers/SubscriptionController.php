@@ -54,6 +54,8 @@ class SubscriptionController extends Controller
             ]
         );
 
+        // TODO: Email admin
+
         $subscription->fill([
             'paused_on' => now()
         ])->save();
@@ -85,6 +87,8 @@ class SubscriptionController extends Controller
                     'pause_collection' => null
                 ]
             );
+
+            // TODO: Email admin
 
             $subscription->fill([
                 'paused_on' => null

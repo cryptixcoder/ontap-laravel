@@ -11,6 +11,11 @@ use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\DeliverableController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TeamController;
+use App\Http\Controllers\Admin\TeamController as AdminTeamController;
+use App\Mail\DeliverablesReceived;
+use App\Models\Organization;
+use App\Models\Project;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -24,17 +29,24 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::post('/team/accept-invite', [TeamController::class, 'acceptInvite'])->name('team.accept-invite');
 
 Route::middleware('auth')->group(function () {
 
     Route::name('admin.')->prefix('admin')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+        Route::get('/mrr', [DashboardController::class, 'getMRRData'])->name('dashboard.mrr');
 
         Route::get('/customers', [CustomerController::class, 'index'])->name('customer.index');
-        Route::get('/customers/{customer}', [CustomerController::class, 'show'])->name('customer.show');
+        Route::get('/customers/{organization}', [CustomerController::class, 'show'])->name('customer.show');
+        Route::get('/customers/{organization}/tasks', [CustomerController::class, 'tasks'])->name('customer.tasks');
+        Route::get('/customers/{organization}/tasks/{task}', [CustomerController::class, 'viewTask'])->name('customer.tasks.show');
+        Route::get('/customers/{organization}/projects/{project}', [CustomerController::class, 'project'])->name('customer.project.show');
+        Route::put('/customers/{organization}/projects/{project}/assign', [CustomerController::class, 'assigUser'])->name('customer.project.assign');
 
         Route::get('/plans', [PlanController::class, 'index'])->name('plan.index');
         Route::post('/plans/create', [PlanController::class, 'store'])->name('plan.store');
@@ -44,6 +56,17 @@ Route::middleware('auth')->group(function () {
         Route::post('/products/create', [ProductController::class, 'store'])->name('product.store');
         Route::put('/products/{product}', [ProductController::class, 'update'])->name('product.update');
         Route::post('/products/{product}/questions', [ProductController::class, 'storeQuestions'])->name('product.store.questions');
+
+        Route::get('/team', [AdminTeamController::class, 'index'])->name('team.index');
+        Route::post('/team/create', [AdminTeamController::class, 'store'])->name('team.store');
+        Route::put('/team/{user}', [AdminTeamController::class, 'update'])->name('team.update');
+        Route::delete('/team/{user}', [AdminTeamController::class, 'destroy'])->name('team.destroy');
+
+        Route::get('/mailable', function() {
+            $organization = Organization::find(1);
+            $project = Project::find(1);
+            return (new DeliverablesReceived($organization, $project, ''))->render();
+        });
     });
 
     Route::get('/tasks', [TaskController::class, 'index'])->name('task.index');
@@ -75,6 +98,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/team', [TeamController::class, 'index'])->name('team.index');
+    Route::post('/team/invite', [TeamController::class, 'invite'])->name('team.invite');
+    Route::delete('/team/remove-invite', [TeamController::class, 'removeInvite'])->name('team.remove-invite');
+    Route::delete('/team/remove-team', [TeamController::class, 'removeTeam'])->name('team.remove-team');
 });
 
 require __DIR__.'/auth.php';

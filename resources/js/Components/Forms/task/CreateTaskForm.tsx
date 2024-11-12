@@ -22,7 +22,7 @@ import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormEventHandler, useState } from 'react';
 // import { createTask } from '@/actions/tasks';
-// import './style.css'
+import './blocknotes.css'
 
 const NewTaskSchema = z.object({
     title: z.string(),
@@ -100,6 +100,7 @@ export default function CreateTaskModal() {
                         </div>
                         <BlockNoteView
                             editor={editor}
+                            sideMenu={false}
                             className="h-[500px]"
                             onChange={() => setData('content', JSON.stringify(editor.document))}
                         />

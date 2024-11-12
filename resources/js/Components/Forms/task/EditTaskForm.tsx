@@ -42,7 +42,7 @@ const uploadFile = async (file: File) => {
 }
 
 
-export default function EditTaskForm({ task }: { task: any}) {
+export default function EditTaskForm({ task, admin = false }: { task: any, admin?: boolean }) {
     const [initialContent, setInitialContent] = useState<PartialBlock[] | undefined | "loading">("loading")
     const { data, setData, put} = useForm({
         title: task.title,
@@ -70,7 +70,10 @@ export default function EditTaskForm({ task }: { task: any}) {
         debounce((taskId: string, key: string, value: string) => {
         router.put(route('task.update', taskId), {
             ...data,
+            admin: admin,
             [key]: value
+        },{
+            preserveScroll: true
         })
     }, 500), [])
 

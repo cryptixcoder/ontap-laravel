@@ -21,9 +21,7 @@ export default function Authenticated({
                     <div className="flex h-16 justify-between">
                         <div className="flex">
                             <div className="flex shrink-0 items-center">
-                                <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
-                                </Link>
+                                <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -44,6 +42,12 @@ export default function Authenticated({
                                     active={route().current('subscription.index')}
                                 >
                                     Subscription
+                                </NavLink>
+                                <NavLink
+                                    href={route('team.index')}
+                                    active={route().current('team.index')}
+                                >
+                                    Team
                                 </NavLink>
                             </div>
                         </div>
@@ -144,10 +148,28 @@ export default function Authenticated({
                 >
                     <div className="space-y-1 pb-3 pt-2">
                         <ResponsiveNavLink
-                            href={route('dashboard')}
-                            active={route().current('dashboard')}
+                            href={route('task.index')}
+                            active={route().current('task.index')}
                         >
-                            Dashboard
+                            Tasks
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('project.index')}
+                            active={route().current('project.index')}
+                        >
+                            Projects
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('subscription.index')}
+                            active={route().current('subscription.index')}
+                        >
+                            Subscription
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('team.index')}
+                            active={route().current('team.index')}
+                        >
+                            Team
                         </ResponsiveNavLink>
                     </div>
 

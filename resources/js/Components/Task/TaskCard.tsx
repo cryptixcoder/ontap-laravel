@@ -17,7 +17,7 @@ export default function TaskCard({ card, index, admin }:TaskCardProps) {
                     {...provided.dragHandleProps}
                     ref={provided.innerRef}
                 >
-                    <Link href={admin ? `/admin/customers/${card.organizationId}/tasks/${card.id}` : `/tasks/${card.id}`}>
+                    <Link href={admin ? route('admin.customer.tasks.show', { organization: card.organization_id, task: card.id }) : route('task.edit', card.id)}>
                         <div className="w-full group relative py-3 text-primary border border-b-2 border-r-2 rounded-lg shadow-sm hover:shadow dark:shadow-white/20 flex flex-col gap-2 border-border/85 hover:border-border focus-within:border-primary/15 bg-white dark:bg-[#161616] transition-colors hover:cursor-pointer active:cursor-grabbing px-3">
                             <span className="text-sm">{card.title}</span>
                         </div>

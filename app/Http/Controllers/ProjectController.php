@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\Project;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -19,6 +22,8 @@ class ProjectController extends Controller
                     'stripe_status' => 'complete'
                 ]);
 
+                // TODO: Email admin
+
                 return to_route('project.index');
             }
         }
@@ -28,10 +33,11 @@ class ProjectController extends Controller
         $organization = $user->organization;
 
         $projects = $organization->projects()->where('stripe_status', 'complete')->get();
-
+        $categories = ProductCategory::with('products')->get();
 
         return Inertia::render('Project/Projects', [
-            'projects' => $projects
+            'projects' => $projects,
+            'categories' => $categories
         ]);
     }
 
@@ -44,7 +50,7 @@ class ProjectController extends Controller
     public function checkout(Request $request) {
         $organization = $request->user()->organization;
 
-        $session = $organization->checkout('price_0PVIu2SMqd8bI2qaCbyluxaW', [
+        $session = $organization->checkout($request->priceId, [
             'success_url' => route('project.index').'?session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => route('project.index')
         ]);
@@ -74,9 +80,13 @@ class ProjectController extends Controller
             ]);
         }
 
+        $now = Carbon::now();
+        $deliveryDate = $now->addWeeks(2);
+
         $project->update([
             'title' => $validated['title'],
             'status' => 'In Progress',
+            'delivery_at' => $deliveryDate
         ]);
 
         return redirect()->back();
