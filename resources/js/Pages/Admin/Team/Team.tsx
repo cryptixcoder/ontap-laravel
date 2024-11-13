@@ -163,7 +163,7 @@ export default function Team({ users }: { users: any[] }) {
                                  <TableRow key={user.id}>
                                     <TableCell className="font-medium">{user.name}</TableCell>
                                     <TableCell>{ user.email }</TableCell>
-                                    <TableCell>{ user.role }</TableCell>
+                                    <TableCell className="capitalize">{ user.role }</TableCell>
                                     <TableCell className="flex items-center justify-end space-x-4">
                                         <Sheet>
                                             <SheetTrigger asChild>

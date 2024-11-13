@@ -13,6 +13,8 @@ use App\Http\Controllers\DeliverableController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\Admin\TeamController as AdminTeamController;
+use App\Http\Controllers\ImpersonateController;
+use App\Http\Controllers\MarketingController;
 use App\Mail\DeliverablesReceived;
 use App\Models\Organization;
 use App\Models\Project;
@@ -20,20 +22,22 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+Route::get('/', [MarketingController::class,'index'])->name('home');
+// Route::get('/', function () {
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
 
 // Route::get('/dashboard', function () {
 //     return Inertia::render('Dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::post('/team/accept-invite', [TeamController::class, 'acceptInvite'])->name('team.accept-invite');
+Route::get('/invite/{invite}', [TeamController::class, 'viewInvite'])->name('invite.view');
+Route::post('/invite/{invite}/accept', [TeamController::class, 'acceptInvite'])->name('invite.accept');
 
 Route::middleware('auth')->group(function () {
 
@@ -68,6 +72,10 @@ Route::middleware('auth')->group(function () {
             return (new DeliverablesReceived($organization, $project, ''))->render();
         });
     });
+
+    Route::post('/impersonate/stop', [ImpersonateController::class, 'stopImpersonation'])->name('impersonate.stop');
+    Route::post('/impersonate/{user}', [ImpersonateController::class, 'impersonate'])->name('impersonate.start');
+
 
     Route::get('/tasks', [TaskController::class, 'index'])->name('task.index');
     Route::get('/tasks/{task}', [TaskController::class, 'edit'])->name('task.edit');

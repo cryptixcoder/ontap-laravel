@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TeamInvite;
 use App\Models\Invite;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 
 class TeamController extends Controller
@@ -25,24 +29,39 @@ class TeamController extends Controller
         $user = $request->user();
         $organization = $user->organization;
 
-        $organization->invites()->create([
+        $invite = $organization->invites()->create([
             'email' => $request->email,
             'role' => $request->role
         ]);
 
+        Mail::to($request->email)
+            ->send(new TeamInvite($organization, $organization->owner, route('team.accept-invite', $invite->token)));
+
         return redirect()->back();
     }
 
-    public function acceptInvite(Request $request, $token) {
-        $invite = Invite::where('token', $token)->first();
+    public function viewInvite(Request $request, Invite $invite) {
+        return Inertia::render('Team/ViewInvite', [
+            'invite' => $invite->load('organization')
+        ]);
+    }
+
+
+    public function acceptInvite(Request $request, Invite $invite) {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
 
         $organization = $invite->organization;
 
-        $organization->users()->create([
+        $newUser = $organization->users()->create([
             'name' => $request->name,
             'email' => $invite->email,
             'password' => Hash::make($request->password),
         ]);
+
+        $organization->users()->updatePivot($newUser->id, ['role' => $invite->role]);
 
         $invite->delete();
 

@@ -22,9 +22,9 @@ import { Input } from '@/Components/ui/input';
 
 export default function Team({ members, invites}:{  members: any[], invites: any[] }) {
 
-    const { post, data, setData} = useForm({
+    const { post, data, setData, reset} = useForm({
         email:'',
-        role: 'Collaborator'
+        role: 'collaborator'
     })
 
     const handleCancelInvite = async (id: string) => {
@@ -37,6 +37,7 @@ export default function Team({ members, invites}:{  members: any[], invites: any
         post(route('team.invite'), {
             preserveScroll: true,
             onSuccess: () => {
+                reset();
                 // setOpen(false);
             },
         });
@@ -64,6 +65,7 @@ export default function Team({ members, invites}:{  members: any[], invites: any
                                                 className="w-full"
                                                 type="email"
                                                 name="email"
+                                                onChange={(e) => setData('email', e.target.value)}
                                             />
                                         </div>
                                         <div className="flex-1">
@@ -74,8 +76,8 @@ export default function Team({ members, invites}:{  members: any[], invites: any
                                                 </SelectTrigger>
 
                                                 <SelectContent>
-                                                    <SelectItem value="Collaborator">Collaborator</SelectItem>
-                                                    <SelectItem value="Admin">Admin</SelectItem>
+                                                    <SelectItem value="collaborator">Collaborator</SelectItem>
+                                                    <SelectItem value="admin">Admin</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                         </div>
@@ -131,12 +133,12 @@ export default function Team({ members, invites}:{  members: any[], invites: any
                                     {members.map((member) => (
                                         <div className="flex justify-between items-center w-full bg-white border p-4 rounded-md">
                                             <div>
-                                                <h6 className="text-xs font-medium">{member.user.name}</h6>
-                                                <p className="text-xs">{member.user.email}</p>
+                                                <h6 className="text-xs font-medium">{member.name}</h6>
+                                                <p className="text-xs">{member.email}</p>
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <div className="flex gap-1 items-center w-36">
-                                                    <span className="text-sm text-primary/60 capitalize">{member.role}</span>
+                                                    <span className="text-sm text-primary/60 capitalize">{member.pivot.role}</span>
                                                 </div>
                                                 <div>
                                                     <DropdownMenu>

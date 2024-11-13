@@ -35,7 +35,7 @@ class TeamInvite extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Team Invite',
+            subject: 'Ontap Team Invite',
         );
     }
 

@@ -35,5 +35,9 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('viewPulse', function (User $user) {
             return true;
         });
+
+        Gate::define('impersonate-users', function(User $user) {
+            return $user->role === 'admin';
+        });
     }
 }

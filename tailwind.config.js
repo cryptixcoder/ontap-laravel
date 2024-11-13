@@ -21,14 +21,28 @@ export default {
     	},
     	extend: {
     		fontFamily: {
-    			sans: ['Figtree', ...defaultTheme.fontFamily.sans]
+    			sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ["Open Sans", "sans-serif"],
+                display: ["Oswald", "sans-serif"],
     		},
     		borderRadius: {
     			lg: 'var(--radius)',
     			md: 'calc(var(--radius) - 2px)',
     			sm: 'calc(var(--radius) - 4px)'
     		},
-    		colors: {},
+    		colors: {
+                 primary: {
+                    100: "#FFE3F0",
+                    200: "#F0B3D0",
+                    300: "#EB8BB8",
+                    400: "#E870A8",
+                    500: "#E3448F",
+                    600: "#D92378",
+                    700: "#D60A69",
+                    800: "#B90659",
+                    900: "#9F044C",
+                },
+            },
     		keyframes: {
     			'accordion-down': {
     				from: {
