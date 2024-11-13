@@ -4,9 +4,22 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { ArrowUp, ArrowDown } from 'lucide-react';
 
+
+interface MRRDataPoint {
+    date: string;
+    mrr: number;
+}
+
+interface MRRGrowth {
+    value: number;
+    percentage: number;
+}
+
+type TimeRange = '7' | '30' | '90';
+
 export default function MRR() {
-    const [timeRange, setTimeRange] = useState('30');
-    const [mrrData, setMRRData] = useState([]);
+    const [timeRange, setTimeRange] = useState<TimeRange>('30');
+    const [mrrData, setMRRData] = useState<MRRDataPoint[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -25,7 +38,7 @@ export default function MRR() {
         fetchMRRData();
     }, [timeRange]);
 
-    const formatCurrency = (value) => {
+    const formatCurrency = (value:any) => {
         return new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
@@ -53,8 +66,8 @@ export default function MRR() {
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-base font-medium">Monthly Recurring Revenue</CardTitle>
                 <Select
-                value={timeRange}
-                onValueChange={setTimeRange}
+                    value={timeRange}
+                    onValueChange={(value: TimeRange) => setTimeRange(value)}
                 >
                 <SelectTrigger className="w-[120px]">
                     <SelectValue placeholder="Select range" />

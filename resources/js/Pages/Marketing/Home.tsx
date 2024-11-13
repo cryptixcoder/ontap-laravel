@@ -11,7 +11,19 @@ const formatter = new Intl.NumberFormat('en-US', {
     currency: 'USD',
 });
 
-export default function Home({auth, plans, categories}:PageProps< {plans: any[], categories: any[]}>) {
+type Category = {
+    id: string;
+    name: string;
+    products: [{
+        id: string;
+        name: string;
+        price: number;
+        description: string;
+        stripe_price_id: string;
+    }]
+}
+
+export default function Home({auth, plans, categories}:PageProps< {plans: any[], categories: Category[]}>) {
     return (
         <div>
             <Navigation />

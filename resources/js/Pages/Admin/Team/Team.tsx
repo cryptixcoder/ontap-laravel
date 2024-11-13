@@ -26,10 +26,12 @@ import { FormEventHandler, useState } from 'react';
 import { Input } from '@/Components/ui/input';
 import { Button } from '@/Components/ui/button';
 import UserDeleteButton from '@/Components/Admin/UserDeleteButton';
+import { User } from '@/types';
+
 
 export default function Team({ users }: { users: any[] }) {
     const { auth } = usePage().props;
-    const [editing, setEditing] = useState(null);
+    const [editing, setEditing] = useState<User|null>(null);
     const [open, setOpen] = useState(false);
 
     const { post, put, data, setData, reset } = useForm({
