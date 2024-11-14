@@ -22,8 +22,8 @@ export default {
     	extend: {
     		fontFamily: {
     			sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-                sans: ["Open Sans", "sans-serif"],
-                display: ["Oswald", "sans-serif"],
+                opensans: ["Open Sans", "sans-serif"],
+                oswald: ["Oswald", "sans-serif"],
     		},
     		borderRadius: {
     			lg: 'var(--radius)',
