@@ -116,7 +116,7 @@ class ProductionSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->command->info('Seeding development data seeding...');
+        $this->command->info('Seeding production data seeding...');
 
         // Seed the admin users
         $this->seedAdmins();
@@ -130,7 +130,7 @@ class ProductionSeeder extends Seeder
         // Seed the products
         $this->seedProducts();
 
-        $this->command->info('Development data seeding complete.');
+        $this->command->info('Production data seeding complete.');
     }
 
 
