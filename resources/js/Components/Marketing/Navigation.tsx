@@ -16,10 +16,10 @@ export default function Navigation() {
                             </Link>
                         </div>
                         <nav className="hidden sm:flex font-display text-xl space-x-8 items-center">
-                            <Link href="/work" className="uppercase hover:text-primary-700">Work</Link>
-                            <Link href="/about" className="uppercase hover:text-primary-700">Agency</Link>
-                            <Link href="/blog" className="uppercase hover:text-primary-700">Blog</Link>
-                            <Link href="/photography" className="uppercase hover:text-primary-700">Photography</Link>
+                            <Link href="https://syncwaretechnologies.com/work" className="uppercase hover:text-primary-700">Work</Link>
+                            <Link href="https://syncwaretechnologies.com/about" className="uppercase hover:text-primary-700">Agency</Link>
+                            <Link href="https://syncwaretechnologies.com/blog" className="uppercase hover:text-primary-700">Blog</Link>
+                            <Link href="https://syncwaretechnologies.com/photography" className="uppercase hover:text-primary-700">Photography</Link>
                             <Link href="https://ontap.syncwaretechnologies.com" className="uppercase text-primary-700 hover:text-primary-700">OnTap</Link>
                             <Link href="https://cal.com/syncwaretechnologies/ontap-intro" target='_blank' className="transition ease-in-out duration-75 inline-flex items-center uppercase border-2 border-primary-700 text-primary-700 px-4 py-2 hover:bg-primary-700 hover:text-white">
                                 Book a call

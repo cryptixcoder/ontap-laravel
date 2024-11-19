@@ -57,7 +57,7 @@ class DevSeeder extends Seeder
     protected $products = [
         [
             'name' => 'Brand Identity Sprint',
-            'description' => '',
+            'description' => 'Build a memorable and cohesive brand identity for your new business or refresh an existing one. This sprint is perfect for startups or businesses needing a brand overhaul.',
             'stripe_statement_descriptor' => 'SYNCWARE BRAND SPRINT',
             'stripe_price_id' => 'price_0QKotuSMqd8bI2qarKhV8HbP',
             'stripe_product_id' => 'prod_RDFOdqkP4pgqrJ',
@@ -79,7 +79,7 @@ class DevSeeder extends Seeder
         ],
         [
             'name' => 'Landing Page Sprint',
-            'description' => '',
+            'description' => 'A high-converting landing page built from scratch for product launches, lead generation, or special campaigns.',
             'stripe_statement_descriptor' => 'SYNCWARE LP SPRINT',
             'stripe_price_id' => 'price_0QKouOSMqd8bI2qab5yqWnnH',
             'stripe_product_id' => 'prod_RDFPIO5DOIkcJc',
@@ -101,7 +101,7 @@ class DevSeeder extends Seeder
         ],
         [
             'name' => 'UI/UX Design Sprint',
-            'description' => '',
+            'description' => 'Get a polished, user-centered UI/UX design that enhances your app’s usability and aesthetic appeal, ideal for new or established apps.',
             'stripe_statement_descriptor' => 'SYNCWARE UIUX SPRINT',
             'stripe_price_id' => 'price_0QKouoSMqd8bI2qalMxncxd4',
             'stripe_product_id' => 'prod_RDFPDeHX51isGN',
@@ -123,7 +123,7 @@ class DevSeeder extends Seeder
         ],
         [
             'name' => 'Feature Sprint',
-            'description' => '',
+            'description' => 'Add a new feature to your product with senior development expertise. Perfect for rapidly implementing high-impact features.',
             'stripe_statement_descriptor' => 'SYNCWARE FEATURE SPRINT',
             'stripe_price_id' => 'price_0QKov7SMqd8bI2qa53loxc4B',
             'stripe_product_id' => 'prod_RDFPJwi3fqdIq0',
@@ -145,7 +145,7 @@ class DevSeeder extends Seeder
         ],
         [
             'name' => 'Prompt Workshop Sprint',
-            'description' => '',
+            'description' => 'A workshop-focused sprint that offers monthly support for leveraging AI in content creation, customer service, or product development. Ideal for teams looking to optimize AI-driven tasks and stay current with best practices.',
             'stripe_statement_descriptor' => 'SYNCWARE AI WORKSHOP',
             'stripe_price_id' => 'price_0QKovgSMqd8bI2qaIq4eZjli',
             'stripe_product_id' => 'prod_RDFQzNjsyTvVPo',
@@ -167,7 +167,7 @@ class DevSeeder extends Seeder
         ],
         [
             'name' => 'Content Generation Sprint',
-            'description' => '',
+            'description' => 'A comprehensive content strategy that combines AI and human expertise to create effective, high-quality content for your brand.',
             'stripe_statement_descriptor' => 'SYNCWARE AI CONTENT',
             'stripe_price_id' => 'price_0QKow7SMqd8bI2qacepjyk05',
             'stripe_product_id' => 'prod_RDFQ7VK3iZSjFE',
