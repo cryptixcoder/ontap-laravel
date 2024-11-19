@@ -1,7 +1,7 @@
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Card, CardContent, CardHeader } from '@/Components/ui/card';
 import MRR from '@/Components/Admin/MRR';
-import { Link, usePage } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import ProjectStatusBadge from '@/Components/Project/ProjectStatusBadge';
 import { EllipsisVerticalIcon } from '@heroicons/react/24/solid';
 import { Button } from '@/Components/ui/button';
@@ -10,6 +10,7 @@ export default function Dashboard({ projects }: { projects: any[]}) {
     const { auth } = usePage().props
     return (
         <AdminLayout>
+            <Head title="Admin Dashboard" />
             { auth.user.role === 'admin' && (
                 <div className='mt-4 space-y-4 container mx-auto h-full'>
               <MRR />

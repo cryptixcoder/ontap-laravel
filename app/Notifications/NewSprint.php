@@ -2,6 +2,8 @@
 
 namespace App\Notifications;
 
+use App\Models\Organization;
+use App\Models\Project;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -15,12 +17,16 @@ class NewSprint extends Notification
 {
     use Queueable;
 
+    public $organization;
+    public $project;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct(Organization $organization, Project $project)
     {
-        //
+        $this->organization = $organization;
+        $this->project = $project;
     }
 
     /**
@@ -30,7 +36,7 @@ class NewSprint extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['slack'];
     }
 
     /**
@@ -58,6 +64,11 @@ class NewSprint extends Notification
 
     public function toSlack(object $notifiable): SlackMessage
     {
-        return (new SlackMessage);
+        return (new SlackMessage)
+                    ->text("A project sprint has been purchased.")
+                    ->headerBlock("Project Sprint Purchased")
+                    ->contextBlock(function(ContextBlock $block) {
+                        $block->text("{$this->project->organization->name}: {$this->project->product->name}");
+                    });
     }
 }

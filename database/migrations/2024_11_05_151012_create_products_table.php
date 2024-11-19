@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('short_description')->nullable();
+            $table->string('stripe_statement_descriptor')->nullable();
             $table->text('description')->nullable();
             $table->text('deliverables')->nullable();
-            $table->decimal('price');
+            $table->decimal('price', 10, 0);
             $table->foreignId('product_category_id')->nullable();
             $table->string('stripe_product_id')->nullable();
             $table->string('stripe_price_id')->nullable();

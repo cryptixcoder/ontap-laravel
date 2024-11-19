@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger, DialogFooter } from '@/Components/ui/dialog';
+import { router } from '@inertiajs/react';
 
 type PauseButtonProps = {
     price: number,
@@ -19,17 +20,15 @@ export default function PauseSubscriptionButton({ price, daysRemaining }: PauseB
     const handlePause = async () => {
         setLoading(true)
 
-        fetch(route('subscription.pause'), {
-            method: 'POST',
-            body: null
-        }).then((response) => {
-
-        }).catch((error) => {
-
-        })
-        .finally(()=> {
-            setLoading(false)
-            setIsOpen(false)
+        router.post(route('subscription.pause'), {},{
+            preserveScroll: true,
+            onSuccess: () => {
+                setLoading(false)
+                setIsOpen(false)
+            },
+            onError: () => {
+                setLoading(false)
+            }
         })
     }
 

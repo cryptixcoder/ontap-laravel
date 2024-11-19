@@ -30,7 +30,7 @@ class NewTaskCreated extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['slack'];
     }
 
     /**
@@ -58,6 +58,11 @@ class NewTaskCreated extends Notification
 
     public function toSlack(object $notifiable): SlackMessage
     {
-        return (new SlackMessage);
+        return (new SlackMessage)
+                    ->text("A project sprint has been purchased.")
+                    ->headerBlock("Project Sprint Purchased")
+                    ->contextBlock(function(ContextBlock $block) {
+                        $block->text("Syncware Technologies: Feature Sprint");
+                    });
     }
 }

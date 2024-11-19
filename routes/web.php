@@ -15,29 +15,18 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\Admin\TeamController as AdminTeamController;
 use App\Http\Controllers\ImpersonateController;
 use App\Http\Controllers\MarketingController;
+use App\Http\Controllers\Webhook\StripeWebhookController;
 use App\Mail\DeliverablesReceived;
 use App\Models\Organization;
 use App\Models\Project;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', [MarketingController::class,'index'])->name('home');
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
-
-// Route::get('/dashboard', function () {
-//     return Inertia::render('Dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/invite/{invite}', [TeamController::class, 'viewInvite'])->name('invite.view');
 Route::post('/invite/{invite}/accept', [TeamController::class, 'acceptInvite'])->name('invite.accept');
+
+Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook'])->name('stripe.webhook');
 
 Route::middleware('auth')->group(function () {
 
@@ -95,7 +84,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/projects', [ProjectController::class, 'index'])->name('project.index');
     Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('project.show');
     Route::post('/projects/{project}/onboard', [ProjectController::class, 'onboard'])->name('project.onboard');
-    Route::post('/projects/checkout', [ProjectController::class, 'checkout'])->name('project.checkout');
+    Route::post('/projects/{product}/checkout', [ProjectController::class, 'checkout'])->name('project.checkout');
 
     Route::get('/subscription', [SubscriptionController::class, 'index'])->name('subscription.index');
     Route::get('/subscription/billing', [SubscriptionController::class, 'manageBilling'])->name('subscription.billing');

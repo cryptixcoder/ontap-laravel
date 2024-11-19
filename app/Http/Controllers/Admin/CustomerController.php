@@ -21,10 +21,10 @@ class CustomerController extends Controller
     }
     public function show(Request $request, Organization $organization)
     {
-
-        $isSubscribed = $organization->subscribed('default');
-        $isPaused = $organization->subscribed() && $organization->subscription('default')->paused();
-        $daysUntilEnd = $organization->subscription('default')->ends_at ? floor(Carbon::now()->diffInDays($organization->subscription('default')->ends_at, false)) : 0;
+        $subscription = $organization->subscription();
+        $isSubscribed = $organization->subscribed();
+        $isPaused = $subscription ? $subscription->paused : false;
+        $daysUntilEnd = $subscription ? $organization->subscription('default')->remainingDays : 0;
         $projects = $organization->projects()->where('stripe_status', 'complete')->get();
 
         return Inertia::render('Admin/Customer/ViewCustomer', [
@@ -33,12 +33,12 @@ class CustomerController extends Controller
                 'owner',
                 'users',
                 'projects',
-                'subscriptions'
             ]),
             'projects' => $projects,
             'isSubscribed' => $isSubscribed,
             'isPaused' => $isPaused,
-            'daysUntilEnd' => $daysUntilEnd
+            'daysUntilEnd' => $daysUntilEnd,
+            'subscription' => $subscription
         ]);
     }
 
@@ -92,9 +92,6 @@ class CustomerController extends Controller
 
     public function project(Request $request, Organization $organization, Project $project)
     {
-        $isSubscribed = $organization->subscribed('default');
-        $isPaused = $organization->subscribed() && $organization->subscription('default')->paused();
-        $daysUntilEnd = $organization->subscription('default')->ends_at ? floor(Carbon::now()->diffInDays($organization->subscription('default')->ends_at, false)) : 0;
         $users = User::where('role', 'admin')->orWhere('role', 'contractor')->get();
 
         return Inertia::render('Admin/Customer/ViewProject', [
@@ -106,9 +103,6 @@ class CustomerController extends Controller
                 'subscriptions'
             ]),
             'project' => $project->load(['product.questions', 'attachments', 'deliverables', 'comments', 'responses.question', 'assignedUser']),
-            'isSubscribed' => $isSubscribed,
-            'isPaused' => $isPaused,
-            'daysUntilEnd' => $daysUntilEnd,
             'users' => $users
         ]);
     }

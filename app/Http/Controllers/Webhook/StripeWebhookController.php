@@ -8,23 +8,32 @@ use App\Http\Controllers\Controller;
 use App\Models\Organization;
 use App\Models\Plan;
 use App\Models\User;
+use App\Notifications\NewSubscription;
 use App\Notifications\SubscriptionStatusChanged;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class StripeWebhookController extends WebhookController
 {
+    protected function getAdminUser() {
+        return User::where('email', 'markusgray@syncwaretech.com')->first();
+    }
+
     /**
      * Handle customer subscription created.
      *
      * @param  array  $payload
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function handleCustomerSubscriptionCreated($payload)
+    protected function handleCustomerSubscriptionCreated(array $payload)
     {
+        Log::debug("Customer Subscription Created");
         $response = parent::handleCustomerSubscriptionCreated($payload);
 
-        $subscription = $payload['data']['object'];
+        Log::debug("Customer Subscription Created");
 
+        $subscription = $payload['data']['object'];
+        Log::debug($subscription['items']['data'][0]['price']['id']);
         $plan = Plan::where('stripe_price_id', $subscription['items']['data'][0]['price']['id'])->first();
 
         if($plan) {
@@ -37,12 +46,12 @@ class StripeWebhookController extends WebhookController
             }
         }
 
-
         $this->notifyAdmins([
             'type' => 'created',
             'subscription_id' => $subscription['id'],
-            'customer_email' => $subscription['customer_email'],
-            'plan' => $subscription['items']['data'][0]['price']['nickname'] ?? 'Unknown Plan',
+            'customer_email' => $organization->owner->email,
+            'organization' => $organization->name,
+            'plan' => $organization->plan->name,
             'status' => $subscription['status']
         ]);
 
@@ -55,8 +64,9 @@ class StripeWebhookController extends WebhookController
      * @param  array  $payload
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function handleCustomerSubscriptionDeleted($payload)
+    protected function handleCustomerSubscriptionDeleted($payload)
     {
+        Log::debug("Customer Subscription Deleted");
         $response = parent::handleCustomerSubscriptionDeleted($payload);
 
         $subscription = $payload['data']['object'];
@@ -73,8 +83,9 @@ class StripeWebhookController extends WebhookController
         $this->notifyAdmins([
             'type' => 'cancelled',
             'subscription_id' => $subscription['id'],
-            'customer_email' => $subscription['customer_email'],
-            'plan' => $subscription['items']['data'][0]['price']['nickname'] ?? 'Unknown Plan',
+            'customer_email' => $organization->owner->email,
+            'organization' => $organization->name,
+            'plan' => "Removed",
             'status' => $subscription['status']
         ]);
 
@@ -87,11 +98,14 @@ class StripeWebhookController extends WebhookController
      * @param  array  $payload
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function handleCustomerSubscriptionUpdated($payload)
+    protected function handleCustomerSubscriptionUpdated($payload)
     {
+        Log::debug("Customer Subscription Updated");
         $response = parent::handleCustomerSubscriptionUpdated($payload);
 
         $subscription = $payload['data']['object'];
+
+        Log::debug($subscription['items']['data'][0]['price']['id']);
 
         $plan = Plan::where('stripe_price_id', $subscription['items']['data'][0]['price']['id'])->first();
 
@@ -111,10 +125,10 @@ class StripeWebhookController extends WebhookController
             $this->notifyAdmins([
                 'type' => 'paused',
                 'subscription_id' => $subscription['id'],
-                'customer_email' => $subscription['customer_email'],
-                'plan' => $subscription['items']['data'][0]['price']['nickname'] ?? 'Unknown Plan',
-                'status' => $subscription['status'],
-                'resumes_at' => $subscription['pause_collection']['resumes_at']
+                'customer_email' => $organization->owner->email,
+                'organization' => $organization->name,
+                'plan' => $organization->plan->name,
+                'status' => $subscription['status']
             ]);
         }
 
@@ -131,6 +145,6 @@ class StripeWebhookController extends WebhookController
     {
         $admin = User::where('email', 'markusgray@syncwaretech.com')->first();
 
-        $admin->notify(new SubscriptionStatusChanged());
+        $admin->notify(new SubscriptionStatusChanged($data));
     }
 }

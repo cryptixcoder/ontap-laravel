@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Plan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -11,18 +12,23 @@ class SubscriptionController extends Controller
 {
     public function index(Request $request){
         $organization = $request->user()->organization;
+        $subscription = $organization->subscription();
         $plan = $organization->plan;
-        $isSubscribed = $organization->subscribed('default');
-        $isPaused = $organization->subscribed() && $organization->subscription('default')->paused();
-        $daysUntilEnd = $organization->subscription('default')->ends_at ? floor(Carbon::now()->diffInDays($organization->subscription('default')->ends_at, false)) : 0;
-        $expires = $organization->subscription('default')->ends_at ? $organization->subscription('default')->ends_at->format('M d, Y') : 0;
+        $isSubscribed = $organization->subscribed();
+        $isPaused = $organization->subscribed() && $subscription->paused;
+        $daysUntilEnd = $subscription ? $subscription->remainingDays : 0;
+        $expires = $subscription && $subscription->ends_at ? $organization->subscription('default')->ends_at->format('M d, Y') : 0;
+        $plans = Plan::all();
 
         return Inertia::render('Subscription/Subscription', [
+            'organization' => $organization->load(['plan']),
+            'subscription' => $subscription,
             'isSubscribed' => $isSubscribed,
             'isPaused' => $isPaused,
             'plan' => $plan,
             'daysUntilEnd' => $daysUntilEnd,
-            'expires' => $expires
+            'expires' => $expires,
+            'plans' => $plans
         ]);
     }
 
@@ -45,11 +51,11 @@ class SubscriptionController extends Controller
 
         $subscription->storeRemainingDays();
 
-        $stripeSubscription = $organization->stripe()->subscriptions->update(
+        $organization->stripe()->subscriptions->update(
             $subscription->stripe_id,
             [
                 'pause_collection' => [
-                    'behavior' => 'mark_uncollectable'
+                    'behavior' => 'mark_uncollectible'
                 ]
             ]
         );

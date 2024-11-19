@@ -28,25 +28,25 @@ export default function Authenticated({
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
                                     href={route('task.index')}
-                                    active={route().current('task.index')}
+                                    active={route().current('task.*')}
                                 >
                                     Tasks
                                 </NavLink>
                                 <NavLink
                                     href={route('project.index')}
-                                    active={route().current('project.index')}
+                                    active={route().current('project.*')}
                                 >
                                     Projects
                                 </NavLink>
                                 <NavLink
                                     href={route('subscription.index')}
-                                    active={route().current('subscription.index')}
+                                    active={route().current('subscription.*')}
                                 >
                                     Subscription
                                 </NavLink>
                                 <NavLink
                                     href={route('team.index')}
-                                    active={route().current('team.index')}
+                                    active={route().current('team.*')}
                                 >
                                     Team
                                 </NavLink>

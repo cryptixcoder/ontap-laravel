@@ -29,8 +29,13 @@ import CreatePlan from '@/Components/Admin/CreatePlan';
 import { FormEventHandler, useState } from 'react';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
-import { useForm } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { Textarea } from '@/Components/ui/textarea';
+
+const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+});
 
 export default function Plans({ plans }:{ plans: any[] }) {
     const [open, setOpen] = useState(false);
@@ -72,6 +77,7 @@ export default function Plans({ plans }:{ plans: any[] }) {
 
     return (
         <AdminLayout header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Manage Plans</h2>}>
+            <Head title="Manage Plans" />
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="mb-4 flex items-center justify-end">
@@ -168,7 +174,6 @@ export default function Plans({ plans }:{ plans: any[] }) {
                             <TableHeader>
                                 <TableRow>
                                     <TableHead className="w-[100px]">Plan Name</TableHead>
-                                    <TableHead>Active Members</TableHead>
                                     <TableHead className="text-right">Amount</TableHead>
                                     <TableHead className="text-right">Actions</TableHead>
                                 </TableRow>
@@ -177,8 +182,7 @@ export default function Plans({ plans }:{ plans: any[] }) {
                                 {plans.map((plan) => (
                                     <TableRow key={plan.id}>
                                         <TableCell className="font-medium">{ plan.name }</TableCell>
-                                        <TableCell>Credit Card</TableCell>
-                                        <TableCell className="text-right">{ plan.price }</TableCell>
+                                        <TableCell className="text-right">{ formatter.format(plan.price) }</TableCell>
                                         <TableCell className="text-right">
                                             <Sheet>
                                                 <SheetTrigger asChild>

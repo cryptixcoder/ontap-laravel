@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
-            $table->decimal('price', 10, 2);
+            $table->decimal('price', 10, 0);
             $table->string('stripe_price_id')->nullable();
             $table->string('stripe_product_id')->nullable();
             $table->string('stripe_statement_descriptor')->nullable();

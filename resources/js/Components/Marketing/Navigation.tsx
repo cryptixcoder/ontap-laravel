@@ -20,7 +20,7 @@ export default function Navigation() {
                             <Link href="/about" className="uppercase hover:text-primary-700">Agency</Link>
                             <Link href="/blog" className="uppercase hover:text-primary-700">Blog</Link>
                             <Link href="/photography" className="uppercase hover:text-primary-700">Photography</Link>
-                            <Link href="https://ontap.syncwaretechnologies.com" className="uppercase text-primary-700 hover:text-primary-700">On-Tap</Link>
+                            <Link href="https://ontap.syncwaretechnologies.com" className="uppercase text-primary-700 hover:text-primary-700">OnTap</Link>
                             <Link href="https://cal.com/syncwaretechnologies/ontap-intro" target='_blank' className="transition ease-in-out duration-75 inline-flex items-center uppercase border-2 border-primary-700 text-primary-700 px-4 py-2 hover:bg-primary-700 hover:text-white">
                                 Book a call
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="ml-2 size-6">

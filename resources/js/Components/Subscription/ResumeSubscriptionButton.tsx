@@ -1,5 +1,6 @@
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger, DialogFooter } from '@/Components/ui/dialog';
+import { router } from '@inertiajs/react';
 import { useState } from 'react';
 
 type ResumeButtonProps = {
@@ -19,17 +20,15 @@ export default function ResumeSubscriptionButton({ price, daysRemaining }: Resum
      const resume = async () => {
         setLoading(true)
 
-        fetch(route('subscription.resume'), {
-            method: 'POST',
-            body: null
-        }).then((response) => {
-
-        }).catch((error) => {
-
-        })
-        .finally(()=> {
-            setLoading(false)
-            setIsOpen(false)
+        router.post(route('subscription.resume'),{},{
+            preserveScroll: true,
+            onSuccess: () => {
+                setLoading(false)
+                setIsOpen(false)
+            },
+            onError: () => {
+                setLoading(false)
+            }
         })
     }
 

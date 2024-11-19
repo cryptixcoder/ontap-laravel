@@ -46,7 +46,7 @@ export default function ViewProject({ project, organization, users }: { project:
     ];
 
     const { put, data, setData} = useForm({
-        user_id: project.assigned_user_id.toString()
+        user_id: project?.assigned_user_id?.toString()
     })
 
     const handleSubmit: FormEventHandler = (e) => {

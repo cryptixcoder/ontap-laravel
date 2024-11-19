@@ -11,7 +11,7 @@ const formatter = new Intl.NumberFormat('en-US', {
     currency: 'USD',
 });
 
-export default function Subscription({ isSubscribed, isPaused, plan, daysUntilEnd, expires }: { isSubscribed: boolean, isPaused: boolean, plan: any, daysUntilEnd: number, expires: string }) {
+export default function Subscription({ isSubscribed, isPaused, plan, daysUntilEnd, expires, plans, subscription }: { isSubscribed: boolean, isPaused: boolean, plan: any, daysUntilEnd: number, expires: string, plans: any[], subscription: any }) {
     return (
         <AuthenticatedLayout
             header={
@@ -35,7 +35,8 @@ export default function Subscription({ isSubscribed, isPaused, plan, daysUntilEn
                             <div className="p-4 flex justify-between items-center">
                                 <div>
                                     <h3 className="text-md font-bold">{plan.name}</h3>
-                                    <p>Renews: {expires}</p>
+                                    { subscription.nextBillingDate && <p>Renews: {subscription.nextBillingDate}</p> }
+                                    { !subscription.nextBillingDate && <p>Ends On: {subscription.ends_at}</p> }
                                 </div>
                                 <div>
                                     {!isPaused && (<Badge className="border-transparent bg-green-400 text-destructive-foreground hover:bg-green-400/80">Active</Badge>)}
@@ -63,7 +64,7 @@ export default function Subscription({ isSubscribed, isPaused, plan, daysUntilEn
                     )}
 
 
-                    {!isSubscribed && <SubscriptionOptions />}
+                    {!isSubscribed && <SubscriptionOptions plans={plans} />}
                 </div>
             </div>
         </AuthenticatedLayout>

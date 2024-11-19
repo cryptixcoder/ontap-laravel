@@ -17,8 +17,44 @@ class Subscription extends CashierSubscription
         'remaining_business_days' => 'integer',
     ];
 
+    protected $appends = [
+        'paused',
+        'nextBillingDate',
+    ];
+
+    public function getPausedAttribute() {
+        return $this->paused();
+    }
+
+    public function getNextBillingDateAttribute() {
+        return $this->nextBillingDate();
+    }
+
     public function paused(){
         return $this->paused_on !== null;
+    }
+
+    public function getRemainingDaysAttribute() {
+        if($this->owner->subscribed()) {
+            return $this->calculateRemainingDays(now(), Carbon::createFromTimestamp($this->asStripeSubscription()->current_period_end));
+        }
+
+        return $this->remaining_business_days;
+    }
+
+    /**
+     * Get the next billing date for the subscription.
+     */
+    public function nextBillingDate()
+    {
+        if ($this->stripe_status === 'canceled') {
+            return null;
+        }
+
+        $stripeSubscription = $this->asStripeSubscription();
+
+        return now()->createFromTimestamp($stripeSubscription->current_period_end)
+            ->format('F j, Y');
     }
 
     public function calculateRemainingDays(Carbon $startDate, Carbon $endDate) {

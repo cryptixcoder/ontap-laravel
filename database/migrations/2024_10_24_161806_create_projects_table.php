@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->foreignId('organization_id')->constrained()->onDelete('cascade');
+            $table->foreignId('product_id')->nullable();
             $table->string('title')->default('Project Sprint');
             $table->text('details')->nullable();
             $table->string('type')->nullable();
@@ -21,6 +22,7 @@ return new class extends Migration
 
             $table->string('stripe_session_id');
             $table->string('stripe_status')->default('incomplete');
+            $table->timestamp('delivery_at')->nullable();
             $table->timestamps();
         });
     }

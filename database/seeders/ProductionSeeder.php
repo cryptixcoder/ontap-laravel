@@ -30,7 +30,7 @@ class ProductionSeeder extends Seeder
             'stripe_product_id' => 'prod_QsdZEf1afvKjba',
             'stripe_price_id' => 'price_0Q0sIoSMqd8bI2qajtoePbSG',
             'price' => 6000,
-            'features' => 'Full Service,Simple monthly subscription,Scales as you need it,Async communication,Cancel anytime,50 hours of design/dev work',
+            'features' => 'Development & Creative Services, 50hrs for Design/Dev, Async Communication, Monthly Consulting, Updates every 2 days, Pause or Cancel Anytime',
             'limit' => 5,
         ],
         [
@@ -40,7 +40,7 @@ class ProductionSeeder extends Seeder
             'stripe_product_id' => 'prod_QsdZ3O9hrRUfRr',
             'stripe_price_id' => 'price_0Q0sIhSMqd8bI2qawOpNSVY1',
             'price' => 15000,
-            'features' => 'Fully Managed Project,Creative Strategy,Access to our full team,Updates every two days,Cancel anytime',
+            'features' => 'Development & Creative Services, Fully managed project, Unlimited Development and Design, Access to full team, Creative Strategy, Monthly Consulting, Updates every 2 days, Pause or Cancel at anytime',
             'limit' => 5,
         ],
     ];
@@ -159,6 +159,8 @@ class ProductionSeeder extends Seeder
                     'name' => $plan['name'],
                     'description' => $plan['description'],
                     'stripe_statement_descriptor' => $plan['stripe_statement_descriptor'],
+                    'stripe_price_id' => $plan['stripe_price_id'],
+                    'stripe_product_id' => $plan['stripe_product_id'],
                     'price' => $plan['price'],
                     'features' => $plan['features'],
                     'limit' => $plan['limit']

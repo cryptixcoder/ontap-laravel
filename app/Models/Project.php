@@ -15,12 +15,17 @@ class Project extends Model
         'stripe_status',
         'product_id',
         'delivery_at',
-        'assigned_user_id'
+        'assigned_user_id',
+        'product_id'
     ];
 
     protected $casts = [
         'delivery_at' => 'datetime'
     ];
+
+    public function organization() {
+        return $this->belongsTo(Organization::class);
+    }
 
     public function comments(){
         return $this->morphMany(Comment::class, 'commentable')->with('user');

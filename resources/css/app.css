@@ -10,3 +10,28 @@
   }
 }
 
+.marquee {
+  overflow: hidden;
+}
+
+.marquee-content {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-around;
+  min-width: 100%;
+}
+
+
+
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+.enable-animation .marquee-content {
+  animation: scroll 10s linear infinite;
+}
+
+.marquee:hover .marquee-content {
+  animation-play-state: paused;
+}

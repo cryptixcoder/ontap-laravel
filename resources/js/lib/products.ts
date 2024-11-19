@@ -23,7 +23,7 @@ export const subscriptionTiers:SubscriptionProps[] = [
         name: "Augment",
         description: "First come first serve",
         features: [
-             "Development & Creative Services",
+            "Development & Creative Services",
             "50hrs for Design/Dev",
             "Async Communication",
             "Monthly Consulting",

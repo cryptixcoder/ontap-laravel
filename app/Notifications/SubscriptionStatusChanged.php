@@ -6,17 +6,22 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Slack\BlockKit\Blocks\ContextBlock;
+use Illuminate\Notifications\Slack\BlockKit\Blocks\SectionBlock;
+use Illuminate\Notifications\Slack\SlackMessage;
 
 class SubscriptionStatusChanged extends Notification
 {
     use Queueable;
 
+    public $data;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct(array $data)
     {
-        //
+        $this->data = $data;
     }
 
     /**
@@ -26,7 +31,7 @@ class SubscriptionStatusChanged extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['slack'];
     }
 
     /**
@@ -50,5 +55,23 @@ class SubscriptionStatusChanged extends Notification
         return [
             //
         ];
+    }
+
+    public function toSlack(object $notifiable): SlackMessage
+    {
+        return (new SlackMessage)
+                    ->text("A user has made an update to their subscription.")
+                    ->headerBlock("Subscription Updated!")
+                    ->contextBlock(function(ContextBlock $block) {
+                        $block->text($this->data['organization']);
+                    })
+                    ->sectionBlock(function(SectionBlock $block) {
+                        $block->text("{$this->data['organization']}'s subscription has been changed to {$this->data['status']}.");
+                        $block->field("*Organization*: {$this->data['organization']}");
+                        $block->field("*Email*: {$this->data['customer_email']}");
+                        $block->field("*Plan*: {$this->data['plan']}");
+                        $block->field("*Status*: {$this->data['status']}");
+                        $block->field("*Plan*: {$this->data['plan']}");
+                    });
     }
 }

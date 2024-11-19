@@ -46,7 +46,7 @@ export default function Team({ members, invites}:{  members: any[], invites: any
     return (
         <AuthenticatedLayout
              header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Team</h2>}>
-            <Head title="Projects" />
+            <Head title="Team" />
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">

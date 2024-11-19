@@ -10,13 +10,18 @@ import { Switch } from '@/Components/ui/switch';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/Components/ui/table';
 import { Textarea } from '@/Components/ui/textarea';
 import AdminLayout from '@/Layouts/AdminLayout';
-import { useForm } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler, useState } from 'react';
 
 type ProductsProps = {
     products: any[],
     productCategories: any[]
 }
+
+const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+});
 
 export default function Products({products, productCategories}: ProductsProps) {
     const [open, setOpen] = useState(false);
@@ -59,6 +64,7 @@ export default function Products({products, productCategories}: ProductsProps) {
 
     return (
         <AdminLayout header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Products</h2>}>
+            <Head title="Manage Products" />
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="mb-4 flex items-center justify-end">
@@ -173,7 +179,7 @@ export default function Products({products, productCategories}: ProductsProps) {
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>Product Name</TableHead>
-                                    <TableHead>Active Members</TableHead>
+                                    <TableHead>Category</TableHead>
                                     <TableHead className="text-right">Amount</TableHead>
                                     <TableHead className="text-right">Actions</TableHead>
                                 </TableRow>
@@ -182,8 +188,8 @@ export default function Products({products, productCategories}: ProductsProps) {
                                 {products.map((product) => (
                                     <TableRow key={product.id}>
                                         <TableCell className="font-medium">{ product.name }</TableCell>
-                                        <TableCell>Credit Card</TableCell>
-                                        <TableCell className="text-right">{ product.price }</TableCell>
+                                        <TableCell>{ product.product_category.name }</TableCell>
+                                        <TableCell className="text-right">{ formatter.format(product.price) }</TableCell>
                                         <TableCell className="text-right space-x-2">
                                             <Sheet>
                                                 <SheetTrigger asChild>

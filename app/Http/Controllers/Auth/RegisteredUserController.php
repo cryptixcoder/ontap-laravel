@@ -49,6 +49,8 @@ class RegisteredUserController extends Controller
             'name' => $request->organizationName
         ]);
 
+        $organization->makeStripeCustomer();
+
         $user->update([
             'organization_id' => $organization->id
         ]);
@@ -57,6 +59,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('task.index', absolute: false));
     }
 }

@@ -20,7 +20,7 @@ import { Select, SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue, } from '@/Components/ui/select';
-import { Link, useForm, usePage } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { ArrowRightIcon } from '@heroicons/react/24/solid';
 import { FormEventHandler, useState } from 'react';
 import { Input } from '@/Components/ui/input';
@@ -148,6 +148,7 @@ export default function Team({ users }: { users: any[] }) {
                 </div>
             </div>
         )}>
+            <Head title="Manage Team" />
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">

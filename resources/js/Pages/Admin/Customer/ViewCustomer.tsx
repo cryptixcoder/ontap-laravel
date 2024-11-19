@@ -9,12 +9,14 @@ import {
 } from "@/Components/ui/dropdown-menu"
 import { Button, buttonVariants } from '@/Components/ui/button';
 import { EllipsisVerticalIcon } from '@heroicons/react/24/solid';
-import { Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import ProjectStatusBadge from '@/Components/Project/ProjectStatusBadge';
 import { Badge } from '@/Components/ui/badge';
 import PauseSubscriptionButton from '@/Components/Subscription/PauseSubscriptionButton';
 import ResumeSubscriptionButton from '@/Components/Subscription/ResumeSubscriptionButton';
 import Breadcrumbs from '@/Components/Breadcrumbs';
+import { PageProps } from '@/types';
+import { ImpersonateButton } from '@/Components/Impersonate';
 
 const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -28,9 +30,10 @@ type Organization = {
     owner: any;
     subscriptions: any[];
     users: any[];
+    owner_id: number;
 }
 
-export default function ViewCustomer({ organization, isSubscribed, isPaused, daysUntilEnd, projects }: { organization: Organization, isSubscribed: boolean, isPaused: boolean, daysUntilEnd: number, projects: any[] }) {
+export default function ViewCustomer({ organization, isSubscribed, isPaused, daysUntilEnd, projects, subscription, auth }: PageProps<{ organization: Organization, isSubscribed: boolean, isPaused: boolean, daysUntilEnd: number, projects: any[], subscription: any }>) {
     const links = [
         {
             label: 'Customers',
@@ -48,9 +51,13 @@ export default function ViewCustomer({ organization, isSubscribed, isPaused, day
             <div className="flex items-center justify-between">
                 <h2 className="text-xl font-semibold leading-tight text-gray-800">{organization.name}</h2>
 
-                <Link className={buttonVariants({variant:"outline"})} href={route('admin.customer.tasks', organization.id)}>Tasks</Link>
+                <div className="space-x-4">
+                    <Link className={buttonVariants({variant:"outline"})} href={route('admin.customer.tasks', organization.id)}>Tasks</Link>
+                    {auth.user.role == "admin" && <ImpersonateButton userId={organization.owner_id} />}
+                </div>
             </div>
         )}>
+            <Head title={organization.name} />
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                      <Breadcrumbs items={links} />
@@ -60,7 +67,8 @@ export default function ViewCustomer({ organization, isSubscribed, isPaused, day
                                     <div className="p-4 flex justify-between items-center">
                                         <div>
                                             <h3 className="text-md font-bold">{organization.plan.name}</h3>
-                                            <p>Renews: {new Date(organization.subscriptions[0].ends_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                                            { subscription.nextBillingDate && <p>Renews: {subscription.nextBillingDate}</p> }
+                                            { !subscription.nextBillingDate && <p>Ends On: {subscription.ends_at}</p> }
                                         </div>
                                         <div>
                                             {!isPaused && (<Badge className="border-transparent bg-green-400 text-destructive-foreground hover:bg-green-400/80">Active</Badge>)}

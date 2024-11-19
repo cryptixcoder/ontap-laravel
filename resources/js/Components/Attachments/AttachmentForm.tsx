@@ -25,6 +25,10 @@ export default function AttachmentForm({ id, type }:{ id: string, type: string }
             onSuccess: (event) => {
                 setProgress(0);
                 setFile(null);
+            },
+            onError: () => {
+                setFile(null);
+                setProgress(0);
             }
         });
     }

@@ -9,6 +9,7 @@ class Product extends Model
     protected $fillable = [
         'name',
         'short_description',
+        'stripe_statement_descriptor',
         'description',
         'deliverables',
         'price',

@@ -72,6 +72,8 @@ export default function CreateTaskModal() {
         post(route('task.store'), {
             preserveScroll: true,
             onSuccess: () => {
+                editor.removeBlocks(editor.document);
+                reset('title');
                 setIsOpen(false);
             },
         });

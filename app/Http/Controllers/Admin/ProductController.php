@@ -30,6 +30,7 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => 'required',
             'short_description' => 'nullable',
+            'stripe_statement_descriptor' => 'nullable',
             'description' => 'required',
             'deliverables' => 'nullable',
             'price' => 'required',
@@ -40,6 +41,7 @@ class ProductController extends Controller
         $stripeProduct = $this->stripe->products->create([
             'name' => $validated['name'],
             'description' => $validated['description'],
+            'statement_descriptor' => $validated['stripe_statement_descriptor']
         ]);
 
         $stripePrice = $this->stripe->prices->create([
@@ -60,6 +62,7 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => 'required',
             'short_description' => 'nullable',
+            'stripe_statement_descriptor' => 'nullable',
             'description' => 'required',
             'deliverables' => 'nullable',
             'price' => 'required',
@@ -70,7 +73,8 @@ class ProductController extends Controller
         if($validated['name'] !== $product->name || $validated['description'] !== $product->description) {
             $this->stripe->products->update($product->stripe_product_id, [
                 'name' => $validated['name'],
-                'description' => $validated['description']
+                'description' => $validated['description'],
+                'statement_descriptor' => $validated['stripe_statement_descriptor']
             ]);
         }
 

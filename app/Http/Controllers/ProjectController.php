@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\Project;
+use App\Models\User;
+use App\Notifications\NewSprint;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -22,7 +24,8 @@ class ProjectController extends Controller
                     'stripe_status' => 'complete'
                 ]);
 
-                // TODO: Email admin
+                $admin = User::where('email', 'markusgray@syncwaretech.com')->first();
+                $admin->notify(new NewSprint($existingProject->organization, $existingProject));
 
                 return to_route('project.index');
             }
@@ -47,17 +50,18 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function checkout(Request $request) {
+    public function checkout(Request $request, Product $product) {
         $organization = $request->user()->organization;
 
-        $session = $organization->checkout($request->priceId, [
+        $session = $organization->checkout($product->stripe_price_id, [
             'success_url' => route('project.index').'?session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => route('project.index')
         ]);
 
         if($session) {
-            $project = $organization->projects()->create([
+            $organization->projects()->create([
                 'title' => 'Sprint Project',
+                'product_id' => $product->id,
                 'stripe_session_id' => $session->id
             ]);
         }

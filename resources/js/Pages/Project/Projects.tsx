@@ -76,7 +76,7 @@ export default function Projects({ projects, categories }: { projects: any[], ca
                                                             </div>
                                                         </div>
                                                         <p className="text-sm text-gray-600">{product.description}</p>
-                                                        <PurchaseProjectButton priceId={product.stripe_price_id}>
+                                                        <PurchaseProjectButton productId={product.id}>
                                                             {product.name}
                                                         </PurchaseProjectButton>
                                                     </div>

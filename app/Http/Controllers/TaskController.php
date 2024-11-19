@@ -72,7 +72,7 @@ class TaskController extends Controller
 
         // TODO: send slack notification
 
-        return to_route('task.index');
+        return;
     }
 
     public function updatePosition(Task $task, Request $request) {

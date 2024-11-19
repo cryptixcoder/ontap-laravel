@@ -13,7 +13,7 @@ export default function PriceCard({ title, description, price, features, childre
             <div className="bg-white rounded-2xl">
                 <div className="">
                     <h4 className="font-oswald text-3xl text-primary-700 mb-2 uppercase">{title}</h4>
-                    <h3 className="font-light text-1xl min-h-[156px] leading-relaxed">{description}</h3>
+                    <h3 className="font-light text-1xl min-h-[126px] leading-relaxed">{description}</h3>
                     <div className="py-4">
                         {children}
                     </div>

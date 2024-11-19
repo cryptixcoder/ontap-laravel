@@ -39,4 +39,11 @@ class Organization extends Model
     public function plan(){
         return $this->belongsTo(Plan::class);
     }
+
+    public function makeStripeCustomer() {
+        return $this->createAsStripeCustomer([
+            'name' => $this->owner->name,
+            'email' => $this->owner->email
+        ]);
+    }
 }

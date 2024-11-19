@@ -4,7 +4,14 @@ import Footer from '@/Components/Marketing/Footer';
 import Navigation from '@/Components/Marketing/Navigation';
 import PriceCard from '@/Components/Marketing/PriceCard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs"
-import { Link } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/Components/ui/accordion"
+import Testimonials from '@/Components/Marketing/Testimonials';
 
 const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -23,9 +30,22 @@ type Category = {
     }]
 }
 
-export default function Home({auth, plans, categories}:PageProps< {plans: any[], categories: Category[]}>) {
+type Plan = {
+    id: string
+    name: string
+    description: string
+    stripe_statement_descriptor: string
+    stripe_product_id: string
+    stripe_price_id: string
+    price: number
+    features: string
+    limit: number
+}
+
+export default function Home({auth, plans, categories}:PageProps< {plans: Plan[], categories: Category[]}>) {
     return (
         <div className="marketing font-opensans">
+            <Head title="OnTap - A full service agency now on-tap" />
             <Navigation />
             <div className="container max-w-5xl mx-auto py-4">
                 <div></div>
@@ -64,7 +84,36 @@ export default function Home({auth, plans, categories}:PageProps< {plans: any[],
                         </div>
                     </div>
                 </div>
-                <div className="px-4 md:px-0 container max-w-5xl mb-20">
+                <div className="grid grid-cols-3 py-4">
+                    <div className="col-span-1 bg-center bg-cover bg-no-repeat py-72" style={{ backgroundImage: `url(/work/01.png)` }}></div>
+                    <div className="col-span-1 bg-center bg-cover bg-no-repeat py-72" style={{ backgroundImage: `url(/work/02.png)` }}></div>
+                    <div className="col-span-1 bg-center bg-cover bg-no-repeat py-72" style={{ backgroundImage: `url(/work/03.png)` }}></div>
+                    <div className="col-span-1 bg-center bg-cover bg-no-repeat py-72" style={{ backgroundImage: `url(/work/04.jpeg)` }}></div>
+                    <div className="col-span-1 bg-center bg-cover bg-no-repeat py-72" style={{ backgroundImage: `url(/work/05.jpeg)` }}></div>
+                    <div className="col-span-1 bg-center bg-cover bg-no-repeat py-72" style={{ backgroundImage: `url(/work/06.png)` }}></div>
+                </div>
+
+                <div className="py-10 border-y my-[60px]">
+                    <div className="px-4 md:px-0 container flex flex-col items-center justify-center">
+                        <h2 className="text-slate-900 text-5xl lg:text-4xl font-oswald font-semibold mb-10 md:mb-8 lg:max-w-4xl uppercase text-center">How Subscriptions Work<span className="text-primary-600">?</span></h2>
+                        <div className="grid grid-cols-3 gap-4">
+                            <div>
+                                <h3 className="font-oswald text-xl uppercase mb-2 text-center">Step 1: Subscribe to a package</h3>
+                                <p className="text-center font-opensans text-lg font-light">Choose the right subscription plan for your needs.</p>
+                            </div>
+                            <div>
+                                <h3 className="font-oswald text-xl uppercase mb-2 text-center">Step 2: Add your tasks</h3>
+                                <p className="text-center font-opensans text-lg font-light">Using our custom task management system, you can add tasks to your project.</p>
+                            </div>
+                            <div>
+                                <h3 className="font-oswald text-xl uppercase mb-2 text-center">Step 3: Get Work Done</h3>
+                                <p className="text-center font-opensans text-lg font-light">Our team will work on your tasks and get them delivered on time.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="subscriptions" className="px-4 md:px-0 container max-w-5xl mb-20">
                     <div>
                         <div className="mb-10">
                             <h3 className="text-slate-900 text-5xl lg:text-4xl font-oswald font-semibold mb-10 md:mb-5 lg:max-w-4xl uppercase">
@@ -79,17 +128,45 @@ export default function Home({auth, plans, categories}:PageProps< {plans: any[],
                                     title={subscription.name}
                                     price={formatter.format(subscription.price)}
                                     description={subscription.description}
-                                    features={[]}
+                                    features={subscription.features.split(',')}
                                 >
-                                    <div className="mt-2">
-                                        {/* <ScheduleSessionButton /> */}
+                                    <div className="mt-2 space-x-4">
+                                         <Link href="/register" className="transition ease-in-out duration-75 inline-flex items-center uppercase border-2 border-primary-700 text-primary-700 px-4 py-2 hover:bg-primary-700 hover:text-white">
+                                            Subscribe
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="ml-2 size-6">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                            </svg>
+                                        </Link>
+
+                                        <Link href="/register" className="transition ease-in-out duration-75 inline-flex items-center uppercase border-2 bg-primary-700 text-white border-primary-700 hover:text-primary-700 px-4 py-2 hover:bg-white">
+                                            Schedule a Call
+                                        </Link>
                                     </div>
                                 </PriceCard>
                             ))}
                         </div>
                     </div>
                 </div>
-                <div className="px-4 md:px-0 container max-w-5xl mb-20">
+                <div className="py-10 border-y my-[60px]">
+                    <div className="px-4 md:px-0 container flex flex-col items-center justify-center">
+                        <h2 className="text-slate-900 text-5xl lg:text-4xl font-oswald font-semibold mb-10 md:mb-8 lg:max-w-4xl uppercase text-center">What about Sprints<span className="text-primary-600">?</span></h2>
+                        <div className="grid grid-cols-3 gap-8">
+                            <div>
+                                <h3 className="font-oswald text-xl uppercase mb-2 text-center">Step 1: Buy a sprint</h3>
+                                <p className="text-center font-opensans text-lg font-light">We crafted our sprints around what most businesses need. Choose the right sprint for you!</p>
+                            </div>
+                            <div>
+                                <h3 className="font-oswald text-xl uppercase mb-2 text-center">Step 2: Fill out sprint details</h3>
+                                <p className="text-center font-opensans text-lg font-light">Each sprint has a questionnaire to gather all the details for your project. Fill it out and we get to work!</p>
+                            </div>
+                            <div>
+                                <h3 className="font-oswald text-xl uppercase mb-2 text-center">Step 3: Receive deliverables in 2 weeks</h3>
+                                <p className="text-center font-opensans text-lg font-light">We've refined our process to provide quality and values quickly. You'll have your deliverables in 2 weeks.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="sprint-packages" className="px-4 md:px-0 container max-w-5xl mb-20">
                     <div>
                         <div className="mb-10">
                             <h3 className="text-slate-900 text-5xl lg:text-4xl font-oswald font-semibold mb-10 md:mb-5 lg:max-w-4xl uppercase">
@@ -115,8 +192,17 @@ export default function Home({auth, plans, categories}:PageProps< {plans: any[],
                                                     description={product.description}
                                                     features={[]}
                                                 >
-                                                    <div className="mt-2">
-                                                        {/* <ScheduleSessionButton /> */}
+                                                    <div className="mt-2 space-x-4">
+                                                        <Link href="/register" className="transition ease-in-out duration-75 inline-flex items-center uppercase border-2 border-primary-700 text-primary-700 px-4 py-2 hover:bg-primary-700 hover:text-white">
+                                                            Start Sprint
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="ml-2 size-6">
+                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                                                            </svg>
+                                                        </Link>
+
+                                                        <Link href="/register" className="transition ease-in-out duration-75 inline-flex items-center uppercase border-2 bg-primary-700 text-white border-primary-700 hover:text-primary-700 px-4 py-2 hover:bg-white">
+                                                            Schedule a Call
+                                                        </Link>
                                                     </div>
                                                 </PriceCard>
                                             ))}
@@ -127,30 +213,43 @@ export default function Home({auth, plans, categories}:PageProps< {plans: any[],
                         </Tabs>
                     </div>
                 </div>
+                <Testimonials />
+                <div className="px-4 md:px-0 container max-w-5xl mb-20">
+                    <h2 className="text-slate-900 text-5xl lg:text-4xl font-oswald font-semibold mb-10 md:mb-5 lg:max-w-4xl uppercase">Frequently Asked Questions<span className="text-primary-600">.</span></h2>
+                    <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value="item-1">
+                            <AccordionTrigger className="text-2xl font-oswald">What is OnTap and How can it help me?</AccordionTrigger>
+                            <AccordionContent className="font-opensans text-xl">
+                            Yes. It adheres to the WAI-ARIA design pattern.
+                            </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem value="item-2">
+                            <AccordionTrigger className="text-2xl font-oswald">What services does OnTap offer?</AccordionTrigger>
+                            <AccordionContent>
+                            Yes. It comes with default styles that matches the other
+                            components&apos; aesthetic.
+                            </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem value="item-3">
+                            <AccordionTrigger className="text-2xl font-oswald">What technologies does OnTap use?</AccordionTrigger>
+                            <AccordionContent>
+                            Yes. It's animated by default, but you can disable it if you prefer.
+                            </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem value="item-4">
+                            <AccordionTrigger className="text-2xl font-oswald">Can Ontap help with existing project Or only new projects?</AccordionTrigger>
+                            <AccordionContent>
+                            Yes. It's animated by default, but you can disable it if you prefer.
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                </div>
                 <div className="py-[40px]">
                     <div className="container max-w-6xl">
-                            {/* <div>
-                                <h2 className="text-5xl md:text-7xl lg:text-8xl font-oswald font-semibold mb-5 uppercase max-w-[30rem]">Plans <span className="text-primary-700">&</span> Pricing</h2>
-                            </div> */}
-                            <div className="grid grid-cols-2 gap-4">
-                                {/* {monthlyServices.map((service) => (
-                                    <PriceTable key={service.id} service={service} />
-                                ))} */}
-                            </div>
+
                         </div>
                     </div>
-                    <div className="grid grid-cols-1 lg:grid-cols-3 ">
-                        {/* {featuredPosts.map((featured) => {
-                            return (
-                            <div key={featured.slug} className="col-span-1 bg-center bg-cover bg-no-repeat" style={{ backgroundImage: `url(${featured.cover})` }}>
-                                <div className="py-72 bg-black bg-opacity-50 h-full">
-                                    <h2 className="font-oswald text-white uppercase text-center text-semibold text-4xl">{featured.title}</h2>
-                                </div>
-                            </div>
-                            )
-                        })} */}
 
-                    </div>
                 </div>
             <Contact />
             <Footer />
