@@ -9,7 +9,8 @@ import { ImpersonationBanner } from '@/Components/Impersonate';
 export default function Authenticated({
     header,
     children,
-}: PropsWithChildren<{ header?: ReactNode }>) {
+    isAdmin,
+}: PropsWithChildren<{ header?: ReactNode, isAdmin?: boolean }>) {
     const user = usePage().props.auth.user;
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -38,18 +39,22 @@ export default function Authenticated({
                                 >
                                     Projects
                                 </NavLink>
-                                <NavLink
-                                    href={route('subscription.index')}
-                                    active={route().current('subscription.*')}
-                                >
-                                    Subscription
-                                </NavLink>
-                                <NavLink
-                                    href={route('team.index')}
-                                    active={route().current('team.*')}
-                                >
-                                    Team
-                                </NavLink>
+                                {usePage().props.isAdmin && (
+                                    <>
+                                        <NavLink
+                                            href={route('subscription.index')}
+                                            active={route().current('subscription.*')}
+                                        >
+                                            Subscription
+                                        </NavLink>
+                                        <NavLink
+                                            href={route('team.index')}
+                                            active={route().current('team.*')}
+                                        >
+                                            Team
+                                        </NavLink>
+                                    </>
+                                )}
                             </div>
                         </div>
 

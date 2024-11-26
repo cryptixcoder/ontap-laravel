@@ -2,6 +2,7 @@ import ManageSubscriptionButton from '@/Components/Subscription/ManageSubscripti
 import PauseSubscriptionButton from '@/Components/Subscription/PauseSubscriptionButton';
 import ResumeSubscriptionButton from '@/Components/Subscription/ResumeSubscriptionButton';
 import SubscriptionOptions from '@/Components/Subscription/SubscriptionOptions';
+import SubscriptionStatusBadge from '@/Components/Subscription/SubscriptionStatusBadge';
 import { Badge } from '@/Components/ui/badge';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
@@ -32,7 +33,8 @@ export default function Subscription({ isSubscribed, isPaused, plan, daysUntilEn
 
                     {isSubscribed && (
                        <div className="bg-white rounded-lg shadow-lg p-2 border border-gray-200">
-                            <div className="p-4 flex justify-between items-center">
+                            <SubscriptionStatusBadge subscription={subscription} plan={plan} />
+                            {/* <div className="p-4 flex justify-between items-center">
                                 <div>
                                     <h3 className="text-md font-bold">{plan.name}</h3>
                                     { subscription.nextBillingDate && <p>Renews: {subscription.nextBillingDate}</p> }
@@ -42,7 +44,7 @@ export default function Subscription({ isSubscribed, isPaused, plan, daysUntilEn
                                     {!isPaused && (<Badge className="border-transparent bg-green-400 text-destructive-foreground hover:bg-green-400/80">Active</Badge>)}
                                     {isPaused && (<Badge className="border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">Paused</Badge>)}
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="p-4 flex justify-between items-center">
                                 <div>
                                     <h6>Total</h6>
@@ -56,8 +58,8 @@ export default function Subscription({ isSubscribed, isPaused, plan, daysUntilEn
                                     <p>{daysUntilEnd} business days remaining</p>
                                 </div>
                                 <div>
-                                    {isSubscribed && !isPaused && <PauseSubscriptionButton price={plan.price} daysRemaining={daysUntilEnd} />}
-                                    {isSubscribed && isPaused && <ResumeSubscriptionButton price={plan.price} daysRemaining={daysUntilEnd} />}
+                                    {subscription.status === 'active' && <PauseSubscriptionButton price={plan.price} daysRemaining={daysUntilEnd} />}
+                                    {subscription.status === 'paused' && <ResumeSubscriptionButton price={plan.price} daysRemaining={daysUntilEnd} />}
                                 </div>
                             </div>
                        </div>

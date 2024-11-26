@@ -2,11 +2,16 @@ import { TrashIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '@/Components/ui/dialog';
+import {router} from '@inertiajs/react';
+
 
 export default function DeliverableDeleteButton({ id }:{id:string}) {
     const [isOpen, setIsOpen ] = useState(false)
 
     const handleDelete = async () => {
+        router.delete(route('deliverable.delete', id), {
+            preserveScroll: true,
+        })
 
         setIsOpen(false);
     }

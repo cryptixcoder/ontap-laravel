@@ -13,9 +13,9 @@ export default function Deliverable({ deliverable }: {deliverable: any}) {
             </div>
             <div>
                 <div className="flex space-x-2 items-center">
-                    <Link href={deliverable.url}>
+                    <a href={deliverable.url}>
                         <ArrowDownTrayIcon className="w-4 h-4" />
-                    </Link>
+                    </a>
                     <DeliverableDeleteButton id={deliverable.id} />
                 </div>
             </div>

@@ -20,6 +20,7 @@ import Breadcrumbs from '@/Components/Breadcrumbs';
 import { getInitials } from '@/lib/utils';
 import { Button } from '@/Components/ui/button';
 import { FormEventHandler } from 'react';
+import ChangeStatus from '@/Components/Project/ChangeStatus';
 
 export default function ViewProject({ project, organization, users }: { project: any, organization: any, users: any[] }) {
      const links = [
@@ -71,9 +72,9 @@ export default function ViewProject({ project, organization, users }: { project:
         >
             <Head title="Projects" />
 
-            <div className="py-12">
+            <div className="">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 mt-4">
-                    <div className="mb-4">
+                    <div className="mb-8">
                         <Breadcrumbs items={links} />
                     </div>
 
@@ -103,6 +104,8 @@ export default function ViewProject({ project, organization, users }: { project:
                                         <ProjectStatusBadge status={project.status} />
                                     </div>
                                 </div>
+
+                                <ChangeStatus organization={organization} project={project} />
 
                                 <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg p-4 space-y-4">
                                     <h3 className="text-sm font-semibold mb-2">Assigned User</h3>

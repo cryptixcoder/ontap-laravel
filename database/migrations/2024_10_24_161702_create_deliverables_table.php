@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('deliverables', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->string('storage_url');
             $table->string('url');
 

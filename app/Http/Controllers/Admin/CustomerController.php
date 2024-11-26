@@ -107,6 +107,14 @@ class CustomerController extends Controller
         ]);
     }
 
+    public function changeProjectStatus(Request $request, Organization $organization, Project $project) {
+        $project->update([
+            'status' => $request->status
+        ]);
+
+        return redirect()->back();
+    }
+
     public function assigUser(Request $request, Organization $organization, Project $project) {
         $validated = $request->validate([
             'user_id' => 'required|string'

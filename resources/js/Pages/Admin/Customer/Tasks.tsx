@@ -35,9 +35,9 @@ export default function Tasks({ tasks, organization }:PageProps<{tasks?: any, or
         >
             <Head title="Tasks" />
 
-            <div className="py-12">
+            <div className="">
                 <div className='w-fit mx-auto'>
-                    <div className="mb-4">
+                    <div className="mb-8">
                         <Breadcrumbs items={links} />
                     </div>
                     <div className="w-full h-full">

@@ -4,9 +4,22 @@ import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import { Button } from '../ui/button';
+import { Alert, AlertDescription } from '../ui/alert';
+
+type FormErrors = {
+    [key: string]: string | undefined;
+};
+
+interface FormData {
+    title: string;
+    responses: {
+        questionId: number;
+        response: string;
+    }[];
+}
 
 export default function OnboardingForm({ project, questions }: { questions: any[], project: any}) {
-    const { data, setData, post } = useForm({
+    const { data, setData, post, errors } = useForm<FormData>({
         title: project.title,
         responses: questions.map((question) => ({
             questionId: question.id,
@@ -25,6 +38,11 @@ export default function OnboardingForm({ project, questions }: { questions: any[
         })
     }
 
+    const getResponseError = (index: number): string | undefined => {
+        const formErrors = errors as { [key: string]: string | undefined };
+        return formErrors[`responses.${index}.response`] || formErrors[`responses.${index}`];
+    };
+
     return (
         <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
             <div className="p-6 text-gray-900">
@@ -37,6 +55,9 @@ export default function OnboardingForm({ project, questions }: { questions: any[
                             value={data.title}
                             onChange={(e) => setData('title', e.target.value)}
                         />
+                        {errors.title && (
+                            <p className="text-sm text-red-500">{errors.title}</p>
+                        )}
                     </div>
                     {questions.map((question, index) => (
                         <div key={question.id} className="space-y-2">
@@ -63,8 +84,21 @@ export default function OnboardingForm({ project, questions }: { questions: any[
                                     }
                                 />
                             )}
+
+                            {getResponseError(index) && (
+                                <p className="text-sm text-red-500">{getResponseError(index)}</p>
+                            )}
                         </div>
                     ))}
+
+                    {Object.keys(errors).length > 0 && (
+                        <Alert variant="destructive">
+                            <AlertDescription>
+                                Please fix the errors above before submitting the form.
+                            </AlertDescription>
+                        </Alert>
+                    )}
+
                     <div className="flex justify-end mt-4">
                         <Button type="submit">
                             Complete Onboarding

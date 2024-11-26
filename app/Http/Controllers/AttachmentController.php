@@ -62,5 +62,12 @@ class AttachmentController extends Controller
 
             to_route('task.edit', ['task' => $task]);
         }
+        else if ($attachment->attachable_type === "App\Models\Project") {
+            $project = $attachment->attachable;
+
+            $attachment->delete();
+
+            to_route('project.show', ['project' => $project]);
+        }
     }
 }

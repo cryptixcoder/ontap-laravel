@@ -30,7 +30,14 @@ class Invite extends Model
         return $this->belongsTo(Organization::class);
     }
 
-    public function getRouteKeyName() {
-        return 'token';
+    public function resolveRouteBinding($value, $field = null)
+    {
+        return $this->where('id', $value)
+                    ->orWhere('token', $value)
+                    ->firstOrFail();
     }
+
+    // public function getRouteKeyName() {
+    //     return 'token';
+    // }
 }

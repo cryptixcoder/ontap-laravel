@@ -20,7 +20,7 @@ export default function ViewProject({project}:{project:any}) {
             header={
                 <div className="flex justify-between items-center">
                     <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                        Mange {project.title}
+                        Manage {project.title}
                     </h2>
                 </div>
             }

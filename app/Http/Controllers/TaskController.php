@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Traits\HasOrganizationAuthorization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class TaskController extends Controller
 {
+    use HasOrganizationAuthorization;
+
     public function index(Request $request){
         $organization = $request->user()->organization;
         $plan = $organization->plan;
@@ -39,18 +42,18 @@ class TaskController extends Controller
             ];
         })->values()->toArray();
 
-        return Inertia::render('Task/Tasks', [
+        return Inertia::render('Task/Tasks', $this->share($request, [
             'tasks' => $result,
             'isSubscribed' => $isSubscribed,
             'isPaused' => $isPaused,
             'plan' => $plan
-        ]);
+        ]));
     }
 
-    public function edit(Task $task) {
-        return Inertia::render('Task/ViewTask', [
+    public function edit(Request $request, Task $task) {
+        return Inertia::render('Task/ViewTask', $this->share($request, [
             'task' => $task->load('comments.user', 'attachments')
-        ]);
+        ]));
     }
 
     public function store(Request $request) {

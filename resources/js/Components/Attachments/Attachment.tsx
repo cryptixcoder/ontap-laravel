@@ -13,9 +13,9 @@ export default function Attachment({ attachment }:{attachment:any}) {
             </div>
             <div>
                 <div className="flex space-x-2 items-center">
-                    <Link href={attachment.url}>
+                    <a href={attachment.url}>
                         <ArrowDownTrayIcon className="w-4 h-4" />
-                    </Link>
+                    </a>
                     <AttachmentDeleteButton id={attachment.id} />
                 </div>
             </div>

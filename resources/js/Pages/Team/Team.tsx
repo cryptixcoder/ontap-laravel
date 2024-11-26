@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, useForm } from '@inertiajs/react';
+import { Head, router, useForm } from '@inertiajs/react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,7 +28,15 @@ export default function Team({ members, invites}:{  members: any[], invites: any
     })
 
     const handleCancelInvite = async (id: string) => {
+        router.delete(route('team.invite.remove', {invite: id}), {
+            preserveScroll: true
+        });
+    }
 
+    const handleRemoveTeamMember = async (id: string) => {
+        router.delete(route('team.user.remove', {user: id}), {
+            preserveScroll: true
+        });
     }
 
     const handleInvite = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -108,7 +116,7 @@ export default function Team({ members, invites}:{  members: any[], invites: any
                                                             <EllipsisVerticalIcon className="w-[16px]" />
                                                         </DropdownMenuTrigger>
                                                         <DropdownMenuContent>
-                                                            <DropdownMenuItem onClick={() => handleCancelInvite(invite.id)}>Cancel</DropdownMenuItem>
+                                                            <DropdownMenuItem onClick={() => handleCancelInvite(invite.id)}>Cancel Invite</DropdownMenuItem>
                                                         </DropdownMenuContent>
                                                     </DropdownMenu>
                                                 </div>
@@ -120,7 +128,7 @@ export default function Team({ members, invites}:{  members: any[], invites: any
                         )}
 
                         <div className="mt-8">
-                            <h3>Team Members</h3>
+                            <h3 className="font-medium mb-4">Team Members</h3>
 
                             {members.length == 0 && (
                                 <div className="bg-white rounded-lg shadow-sm p-4 space-y-8 mt-8">
@@ -148,7 +156,7 @@ export default function Team({ members, invites}:{  members: any[], invites: any
                                                             </Button>
                                                         </DropdownMenuTrigger>
                                                         <DropdownMenuContent>
-                                                            <DropdownMenuItem>Remove User</DropdownMenuItem>
+                                                            <DropdownMenuItem onClick={() => handleRemoveTeamMember(member.id)}>Remove User</DropdownMenuItem>
                                                         </DropdownMenuContent>
                                                     </DropdownMenu>
                                                 </div>

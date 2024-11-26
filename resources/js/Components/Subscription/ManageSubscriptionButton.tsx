@@ -8,7 +8,7 @@ export default function ManageSubscriptionButton() {
     }
 
     return (
-        <Button onClick={handleClick}>
+        <Button variant="outline" onClick={handleClick}>
             Manage Subscription
         </Button>
     )

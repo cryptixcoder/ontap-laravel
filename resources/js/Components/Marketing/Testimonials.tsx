@@ -28,9 +28,9 @@ const testimonials = [
 export default function Testimonials() {
     return (
         <div className="enable-animation my-[60px] font-opensans ">
-            <div className="px-4 md:px-0 container max-w-6xl mb-[40px]">
+            <div className="px-4 md:px-0 container max-w-5xl mb-[40px]">
                 <div className="mb-10 lg:mb-0">
-                    <h3 className="text-5xl md:text-7xl lg:text-8xl font-oswald font-semibold mb-5 lg:max-w-4xl uppercase">What our customers say<span className="text-primary-700">...</span></h3>
+                    <h3 className="text-4xl font-oswald font-semibold mb-5 uppercase">Client Testimonials<span className="text-primary-700">.</span></h3>
                 </div>
             </div>
             <div className="marquee flex">

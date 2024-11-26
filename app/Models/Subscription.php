@@ -20,10 +20,24 @@ class Subscription extends CashierSubscription
     protected $appends = [
         'paused',
         'nextBillingDate',
+        'formattedEndsAt',
+        'status'
     ];
 
     public function getPausedAttribute() {
         return $this->paused();
+    }
+
+    public function getStatusAttribute() {
+        if ($this->ends_at) {
+            return 'canceled';
+        }
+
+        if ($this->paused()) {
+            return 'paused';
+        }
+
+        return 'active';
     }
 
     public function getNextBillingDateAttribute() {
@@ -42,12 +56,16 @@ class Subscription extends CashierSubscription
         return $this->remaining_business_days;
     }
 
+    public function getFormattedEndsAtAttribute() {
+        return $this->ends_at ? $this->ends_at->format('F j, Y') : null;
+    }
+
     /**
      * Get the next billing date for the subscription.
      */
     public function nextBillingDate()
     {
-        if ($this->stripe_status === 'canceled') {
+        if ($this->ends_at || $this->stripe_status === 'canceled') {
             return null;
         }
 

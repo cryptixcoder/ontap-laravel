@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Plan;
+use App\Traits\HasOrganizationAuthorization;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -10,6 +11,8 @@ use Laravel\Cashier\Cashier;
 
 class SubscriptionController extends Controller
 {
+    use HasOrganizationAuthorization;
+
     public function index(Request $request){
         $organization = $request->user()->organization;
         $subscription = $organization->subscription();
@@ -20,7 +23,7 @@ class SubscriptionController extends Controller
         $expires = $subscription && $subscription->ends_at ? $organization->subscription('default')->ends_at->format('M d, Y') : 0;
         $plans = Plan::all();
 
-        return Inertia::render('Subscription/Subscription', [
+        return Inertia::render('Subscription/Subscription', $this->share($request, [
             'organization' => $organization->load(['plan']),
             'subscription' => $subscription,
             'isSubscribed' => $isSubscribed,
@@ -29,7 +32,7 @@ class SubscriptionController extends Controller
             'daysUntilEnd' => $daysUntilEnd,
             'expires' => $expires,
             'plans' => $plans
-        ]);
+        ]));
     }
 
     public function pause(Request $request) {

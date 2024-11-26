@@ -34,7 +34,7 @@ const formatter = new Intl.NumberFormat('en-US', {
 });
 
 
-export default function Projects({ projects, categories }: { projects: any[], categories: Category[] }) {
+export default function Projects({ projects, categories, isAdmin }: { projects: any[], categories: Category[], isAdmin?:boolean }) {
     return (
         <AuthenticatedLayout
             header={
@@ -43,51 +43,53 @@ export default function Projects({ projects, categories }: { projects: any[], ca
                         Projects
                     </h2>
 
-                    <Sheet>
-                        <SheetTrigger asChild>
-                            <Button>
-                                Buy Project Sprint
-                            </Button>
-                        </SheetTrigger>
-                        <SheetContent>
-                            <SheetHeader>
-                                <SheetTitle>Project Sprints</SheetTitle>
-                                <SheetDescription>
-                                    Choose the best project sprint for your needs.
-                                </SheetDescription>
-                            </SheetHeader>
+                    {isAdmin && (
+                        <Sheet>
+                            <SheetTrigger asChild>
+                                <Button variant="outline">
+                                    Buy Project Sprint
+                                </Button>
+                            </SheetTrigger>
+                            <SheetContent>
+                                <SheetHeader>
+                                    <SheetTitle>Project Sprints</SheetTitle>
+                                    <SheetDescription>
+                                        Choose the best project sprint for your needs.
+                                    </SheetDescription>
+                                </SheetHeader>
 
-                            <div className="my-8">
-                                <Tabs defaultValue={categories[1]?.id.toString()} className="w-full">
-                                    <TabsList className="w-full flex-wrap h-auto">
-                                        {categories.map((cat) => (
-                                            <TabsTrigger key={cat.id} value={cat.id.toString()} >{cat.name}</TabsTrigger>
-                                        ))}
-                                    </TabsList>
-                                    <div className="mt-4">
-                                        {categories.map((cat) => (
-                                            <TabsContent key={cat.id} value={cat.id.toString()} className="space-y-8">
-                                                {cat.products.map((product) => (
-                                                    <div className="space-y-2 border p-4 rounded-md shadow-sm">
-                                                        <div className="flex items-center justify-between">
-                                                            <h3 className="font-semibold text-lg mb-2">{product.name}</h3>
-                                                            <div>
-                                                                <p>{formatter.format(product.price)}</p>
+                                <div className="my-8">
+                                    <Tabs defaultValue={categories[0]?.id.toString()} className="w-full">
+                                        <TabsList className="w-full flex-wrap h-auto">
+                                            {categories.map((cat) => (
+                                                <TabsTrigger key={cat.id} value={cat.id.toString()} >{cat.name}</TabsTrigger>
+                                            ))}
+                                        </TabsList>
+                                        <div className="mt-4">
+                                            {categories.map((cat) => (
+                                                <TabsContent key={cat.id} value={cat.id.toString()} className="space-y-8">
+                                                    {cat.products.map((product) => (
+                                                        <div className="space-y-2 border p-4 rounded-md shadow-sm">
+                                                            <div className="flex items-center justify-between">
+                                                                <h3 className="font-semibold text-lg mb-2">{product.name}</h3>
+                                                                <div>
+                                                                    <p>{formatter.format(product.price)}</p>
+                                                                </div>
                                                             </div>
+                                                            <p className="text-sm text-gray-600">{product.description}</p>
+                                                            <PurchaseProjectButton productId={product.id}>
+                                                                {product.name}
+                                                            </PurchaseProjectButton>
                                                         </div>
-                                                        <p className="text-sm text-gray-600">{product.description}</p>
-                                                        <PurchaseProjectButton productId={product.id}>
-                                                            {product.name}
-                                                        </PurchaseProjectButton>
-                                                    </div>
-                                                ))}
-                                            </TabsContent>
-                                        ))}
-                                    </div>
-                                </Tabs>
-                            </div>
-                        </SheetContent>
-                    </Sheet>
+                                                    ))}
+                                                </TabsContent>
+                                            ))}
+                                        </div>
+                                    </Tabs>
+                                </div>
+                            </SheetContent>
+                        </Sheet>
+                    )}
                 </div>
             }
         >

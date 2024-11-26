@@ -32,12 +32,11 @@ const ImpersonationBanner = () => {
 
     return (
         <Alert variant="default" className="mb-4">
-            <AlertDescription className="max-w-7xl mx-auto flex items-center justify-between">
+            <AlertDescription className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
                 <span>You are currently impersonating another user.</span>
                 <Button
                     onClick={stopImpersonating}
                     variant="outline"
-                    size="sm"
                     className="bg-yellow-500 text-white hover:bg-yellow-600"
                 >
                     Stop Impersonating

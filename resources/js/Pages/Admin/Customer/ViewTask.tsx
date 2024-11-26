@@ -43,8 +43,8 @@ export default function ViewTask({ task, organization}: { task: any, organizatio
         )}>
             <Head title="Manage Task" />
 
-            <div className="py-12 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="mb-4">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div className="mb-8">
                     <Breadcrumbs items={links} />
                 </div>
                 <div className="w-full h-full pb-8">

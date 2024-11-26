@@ -1,7 +1,7 @@
 <x-mail::message>
 Hello,
 
-<strong>{{$invitedBy->name}}</strong> has invited you to the <strong>{{ $organization->name }}</strong> team on <strong>On-Tap</strong>.
+<strong>{{$invitedBy->name}}</strong> has invited you to the <strong>{{ $organization->name }}</strong> team on <strong>OnTap</strong>.
 
 <x-mail::button :url="$link">
 Join the team

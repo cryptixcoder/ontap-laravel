@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
+            $table->text('description');
             $table->decimal('price', 10, 0);
             $table->string('stripe_price_id')->nullable();
             $table->string('stripe_product_id')->nullable();

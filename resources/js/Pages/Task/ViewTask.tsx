@@ -18,7 +18,7 @@ export default function ViewTask({ task }: PageProps<{task: any}>) {
         >
             <Head title="Tasks" />
 
-            <div className="py-12 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="py-12 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
                 <div className="w-full h-full pb-8">
                     <EditTaskForm task={task} />
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg p-4 space-y-8 mt-8">

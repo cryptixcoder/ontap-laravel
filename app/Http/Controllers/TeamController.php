@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\TeamInvite;
 use App\Models\Invite;
 use App\Models\User;
+use App\Traits\HasOrganizationAuthorization;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -13,16 +14,18 @@ use Inertia\Inertia;
 
 class TeamController extends Controller
 {
+    use HasOrganizationAuthorization;
+
     public function index(Request $request) {
         $user = $request->user();
         $organization = $user->organization;
         $members = $organization->users()->get();
         $invites = $organization->invites()->get();
 
-        return Inertia::render('Team/Team', [
+        return Inertia::render('Team/Team', $this->share($request, [
             'members' => $members,
             'invites' => $invites
-        ]);
+        ]));
     }
 
     public function invite(Request $request) {
@@ -35,7 +38,7 @@ class TeamController extends Controller
         ]);
 
         Mail::to($request->email)
-            ->send(new TeamInvite($organization, $organization->owner, route('team.accept-invite', $invite->token)));
+            ->send(new TeamInvite($organization, $organization->owner, route('invite.view', $invite->token)));
 
         return redirect()->back();
     }
@@ -59,9 +62,10 @@ class TeamController extends Controller
             'name' => $request->name,
             'email' => $invite->email,
             'password' => Hash::make($request->password),
+            'organization_id' => $organization->id
         ]);
 
-        $organization->users()->updatePivot($newUser->id, ['role' => $invite->role]);
+        $organization->users()->updateExistingPivot($newUser->id, ['role' => $invite->role]);
 
         $invite->delete();
 
@@ -74,7 +78,11 @@ class TeamController extends Controller
         return redirect()->back();
     }
 
-    public function removeTeam() {
+    public function removeTeamMember(Request $request, User $user) {
+        $organization = $request->user()->organization;
 
+        $user->organizations()->detach($organization);
+
+        return redirect()->back();
     }
 }

@@ -5,6 +5,8 @@ import Navigation from '@/Components/Marketing/Navigation';
 import PriceCard from '@/Components/Marketing/PriceCard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs"
 import { Head, Link } from '@inertiajs/react';
+import { FAQs } from '@/lib/faq';
+import ReactMarkdown from 'react-markdown'
 import {
   Accordion,
   AccordionContent,
@@ -55,7 +57,7 @@ export default function Home({auth, plans, categories}:PageProps< {plans: Plan[]
                             href={auth.user.role === 'admin' ? route('admin.dashboard.index') : route('task.index')}
                             className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
                         >
-                            { auth.user.role === 'admin' ? 'Admin Dashboard' : 'My Dashboard' }
+                            { auth.user.role === 'admin' ? 'Admin Dashboard' : 'Client Dashboard' }
                         </Link>
                     ) : (
                         <>
@@ -63,13 +65,7 @@ export default function Home({auth, plans, categories}:PageProps< {plans: Plan[]
                                 href={route('login')}
                                 className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
                             >
-                                Log in
-                            </Link>
-                            <Link
-                                href={route('register')}
-                                className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                            >
-                                Register
+                                Client Login
                             </Link>
                         </>
                     )}
@@ -190,7 +186,7 @@ export default function Home({auth, plans, categories}:PageProps< {plans: Plan[]
                                                     title={product.name}
                                                     price={formatter.format(product.price)}
                                                     description={product.description}
-                                                    features={[]}
+                                                    features={product.deliverables.split(',')}
                                                 >
                                                     <div className="mt-2 space-x-4">
                                                         <Link href="/register" className="transition ease-in-out duration-75 inline-flex items-center uppercase border-2 border-primary-700 text-primary-700 px-4 py-2 hover:bg-primary-700 hover:text-white">
@@ -214,34 +210,17 @@ export default function Home({auth, plans, categories}:PageProps< {plans: Plan[]
                     </div>
                 </div>
                 <Testimonials />
-                <div className="px-4 md:px-0 container max-w-5xl mb-20">
+                <div className="px-4 md:px-0 container max-w-3xl mb-20">
                     <h2 className="text-slate-900 text-5xl lg:text-4xl font-oswald font-semibold mb-10 md:mb-5 lg:max-w-4xl uppercase">Frequently Asked Questions<span className="text-primary-600">.</span></h2>
                     <Accordion type="single" collapsible className="w-full">
-                        <AccordionItem value="item-1">
-                            <AccordionTrigger className="text-2xl font-oswald">What is OnTap and How can it help me?</AccordionTrigger>
-                            <AccordionContent className="font-opensans text-xl">
-                            Yes. It adheres to the WAI-ARIA design pattern.
-                            </AccordionContent>
-                        </AccordionItem>
-                        <AccordionItem value="item-2">
-                            <AccordionTrigger className="text-2xl font-oswald">What services does OnTap offer?</AccordionTrigger>
-                            <AccordionContent>
-                            Yes. It comes with default styles that matches the other
-                            components&apos; aesthetic.
-                            </AccordionContent>
-                        </AccordionItem>
-                        <AccordionItem value="item-3">
-                            <AccordionTrigger className="text-2xl font-oswald">What technologies does OnTap use?</AccordionTrigger>
-                            <AccordionContent>
-                            Yes. It's animated by default, but you can disable it if you prefer.
-                            </AccordionContent>
-                        </AccordionItem>
-                        <AccordionItem value="item-4">
-                            <AccordionTrigger className="text-2xl font-oswald">Can Ontap help with existing project Or only new projects?</AccordionTrigger>
-                            <AccordionContent>
-                            Yes. It's animated by default, but you can disable it if you prefer.
-                            </AccordionContent>
-                        </AccordionItem>
+                        {FAQs.map((faq, index) => (
+                            <AccordionItem value={`item-${index}`} key={index}>
+                                <AccordionTrigger className="text-2xl font-oswald">{faq.question}</AccordionTrigger>
+                                <AccordionContent className="prose prose-lg w-full font-opensans">
+                                    <ReactMarkdown>{faq.answer}</ReactMarkdown>
+                                </AccordionContent>
+                            </AccordionItem>
+                        ))}
                     </Accordion>
                 </div>
                 <div className="py-[40px]">
@@ -251,7 +230,7 @@ export default function Home({auth, plans, categories}:PageProps< {plans: Plan[]
                     </div>
 
                 </div>
-            <Contact />
+            {/* <Contact /> */}
             <Footer />
         </div>
     )

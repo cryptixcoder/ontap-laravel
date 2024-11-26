@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\TeamController as AdminTeamController;
 use App\Http\Controllers\ImpersonateController;
 use App\Http\Controllers\MarketingController;
 use App\Http\Controllers\Webhook\StripeWebhookController;
+use App\Http\Middleware\CheckOrganizationAdmin;
 use App\Mail\DeliverablesReceived;
 use App\Models\Organization;
 use App\Models\Project;
@@ -39,6 +40,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/customers/{organization}/tasks', [CustomerController::class, 'tasks'])->name('customer.tasks');
         Route::get('/customers/{organization}/tasks/{task}', [CustomerController::class, 'viewTask'])->name('customer.tasks.show');
         Route::get('/customers/{organization}/projects/{project}', [CustomerController::class, 'project'])->name('customer.project.show');
+        Route::put('/customers/{organization}/projects/{project}/status', [CustomerController::class, 'changeProjectStatus'])->name('customer.project.status');
         Route::put('/customers/{organization}/projects/{project}/assign', [CustomerController::class, 'assigUser'])->name('customer.project.assign');
 
         Route::get('/plans', [PlanController::class, 'index'])->name('plan.index');
@@ -86,20 +88,20 @@ Route::middleware('auth')->group(function () {
     Route::post('/projects/{project}/onboard', [ProjectController::class, 'onboard'])->name('project.onboard');
     Route::post('/projects/{product}/checkout', [ProjectController::class, 'checkout'])->name('project.checkout');
 
-    Route::get('/subscription', [SubscriptionController::class, 'index'])->name('subscription.index');
-    Route::get('/subscription/billing', [SubscriptionController::class, 'manageBilling'])->name('subscription.billing');
-    Route::post('/subscription/pause', [SubscriptionController::class, 'pause'])->name('subscription.pause');
-    Route::post('/subscription/resume', [SubscriptionController::class, 'resume'])->name('subscription.resume');
-    Route::post('/subscription/checkout', [SubscriptionController::class, 'createCheckoutSession'])->name('subscription.checkout');
+    Route::get('/subscription', [SubscriptionController::class, 'index'])->name('subscription.index')->middleware(CheckOrganizationAdmin::class);
+    Route::get('/subscription/billing', [SubscriptionController::class, 'manageBilling'])->name('subscription.billing')->middleware(CheckOrganizationAdmin::class);
+    Route::post('/subscription/pause', [SubscriptionController::class, 'pause'])->name('subscription.pause')->middleware(CheckOrganizationAdmin::class);
+    Route::post('/subscription/resume', [SubscriptionController::class, 'resume'])->name('subscription.resume')->middleware(CheckOrganizationAdmin::class);
+    Route::post('/subscription/checkout', [SubscriptionController::class, 'createCheckoutSession'])->name('subscription.checkout')->middleware(CheckOrganizationAdmin::class);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/team', [TeamController::class, 'index'])->name('team.index');
-    Route::post('/team/invite', [TeamController::class, 'invite'])->name('team.invite');
-    Route::delete('/team/remove-invite', [TeamController::class, 'removeInvite'])->name('team.remove-invite');
-    Route::delete('/team/remove-team', [TeamController::class, 'removeTeam'])->name('team.remove-team');
+    Route::get('/team', [TeamController::class, 'index'])->name('team.index')->middleware(CheckOrganizationAdmin::class);
+    Route::post('/team/invite', [TeamController::class, 'invite'])->name('team.invite')->middleware(CheckOrganizationAdmin::class);
+    Route::delete('/team/invite/{invite}/remove', [TeamController::class, 'removeInvite'])->name('team.invite.remove')->middleware(CheckOrganizationAdmin::class);
+    Route::delete('/team/user/{user}/remove', [TeamController::class, 'removeTeamMember'])->name('team.user.remove')->middleware(CheckOrganizationAdmin::class);
 });
 
 require __DIR__.'/auth.php';

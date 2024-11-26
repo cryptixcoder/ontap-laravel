@@ -54,7 +54,27 @@ class User extends Authenticatable
     }
 
     public function organization() {
-        return $this->belongsTo(Organization::class, 'organization_id');
+        return $this->belongsTo(Organization::class);
+    }
+
+    public function organizations() {
+        return $this->belongsToMany(Organization::class)
+                    ->withPivot('role')
+                    ->withTimestamps();
+    }
+
+    public function isAdminOf(Organization $organization) {
+        return $this->organizations()
+                    ->wherePivot('organization_id', $organization->id)
+                    ->wherePivot('role', 'admin')
+                    ->exists() || $organization->owner_id == $this->id;
+    }
+
+    public function isCollaboratorOf(Organization $organization) {
+        return $this->organizations()
+                    ->wherePivot('organization_id', $organization->id)
+                    ->wherePivot('role', 'collaborator')
+                    ->exists();
     }
 
     public function projects() {
