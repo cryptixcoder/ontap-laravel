@@ -28,6 +28,7 @@ type Category = {
         name: string;
         price: number;
         description: string;
+        deliverables: string;
         stripe_price_id: string;
     }]
 }
