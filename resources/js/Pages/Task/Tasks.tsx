@@ -25,7 +25,13 @@ export default function Tasks({ tasks, isSubscribed, isPaused, subscription }:Pa
                     </div>
                 )}
 
-
+                {subscription.status === 'paused' && (
+                    <div className="max-w-4xl mx-auto my-8">
+                        <div className="p-4 bg-white border">
+                            <p className="text-center">You're subscription is currently paused.</p>
+                        </div>
+                    </div>
+                )}
                 {subscription.status === 'active' && (
                     <div className='w-fit mx-auto'>
                         <div className="w-full h-full">
