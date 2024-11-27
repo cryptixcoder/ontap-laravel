@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class Subscription extends CashierSubscription
 {
     protected $casts = [
-        'pause_on' => 'datetime',
+        'paused_on' => 'datetime',
         'trial_ends_at' => 'datetime',
         'ends_at' => 'datetime',
         'remaining_business_days' => 'integer',

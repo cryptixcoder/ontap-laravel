@@ -18,7 +18,7 @@ class TaskController extends Controller
         $isSubscribed = $organization->subscribed('default');
         $isPaused = $organization->subscribed() && $organization->subscription('default')->paused();
         $tasks = $organization->tasks()->orderBy('position', 'asc')->get();
-        $subscription = $organization->subscription;
+        $subscription = $organization->subscription();
         $initialStatuses = ["Not Started", "To Do", "Awaiting Feedback", "Revisions Needed", "Done"];
 
         // Create an empty array grouped by statuses
