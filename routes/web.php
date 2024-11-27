@@ -27,7 +27,7 @@ Route::get('/', [MarketingController::class,'index'])->name('home');
 Route::get('/invite/{invite}', [TeamController::class, 'viewInvite'])->name('invite.view');
 Route::post('/invite/{invite}/accept', [TeamController::class, 'acceptInvite'])->name('invite.accept');
 
-Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook'])->name('cashier.webhook');
+Route::post('/stripe/webhook', [StripeWebhookController::class, 'handleWebhook'])->name('ontap.webhook');
 
 Route::middleware('auth')->group(function () {
 
