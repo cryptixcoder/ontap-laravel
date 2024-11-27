@@ -4,13 +4,13 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { PageProps } from '@/types';
 import { Head } from '@inertiajs/react';
 
-export default function Tasks({ tasks, isSubscribed, isPaused }:PageProps<{tasks?: any, isSubscribed?: boolean, isPaused?: boolean}>) {
+export default function Tasks({ tasks, isSubscribed, isPaused, subscription }:PageProps<{tasks?: any, isSubscribed?: boolean, isPaused?: boolean, subscription?: any}>) {
     return (
         <AuthenticatedLayout
             header={
                 <div className="flex justify-between items-center">
                     <h2 className="text-xl font-semibold leading-tight text-gray-800">Tasks</h2>
-                    {isSubscribed && !isPaused && <CreateTaskModal />}
+                    {subscription.status === 'active' && <CreateTaskModal />}
                 </div>
             }
         >
@@ -26,7 +26,7 @@ export default function Tasks({ tasks, isSubscribed, isPaused }:PageProps<{tasks
                 )}
 
 
-                {isSubscribed && !isPaused && (
+                {subscription.status === 'active' && (
                     <div className='w-fit mx-auto'>
                         <div className="w-full h-full">
                             <TaskListContainer tasks={tasks} />

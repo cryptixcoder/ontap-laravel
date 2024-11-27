@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('subscriptions', function (Blueprint $table) {
             $table->integer('remaining_business_days')->nullable();
-            $table->timestamp('pause_on')->nullable();
+            $table->timestamp('paused_on')->nullable();
         });
     }
 
@@ -24,7 +24,7 @@ return new class extends Migration
     {
         Schema::table('subscriptions', function (Blueprint $table) {
             $table->dropColumn('remaining_business_days');
-            $table->dropColumn('pause_on');
+            $table->dropColumn('paused_on');
         });
     }
 };
