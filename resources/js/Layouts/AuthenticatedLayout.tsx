@@ -39,7 +39,7 @@ export default function Authenticated({
                                 >
                                     Projects
                                 </NavLink>
-                                {isAdmin && (
+                                {usePage().props.isAdmin && (
                                     <>
                                         <NavLink
                                             href={route('subscription.index')}
