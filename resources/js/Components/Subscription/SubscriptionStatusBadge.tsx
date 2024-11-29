@@ -31,7 +31,7 @@ export default function SubscriptionStatusBadge({ subscription, plan }: { subscr
         <div className="p-4 flex justify-between items-center">
             <div>
                 <h3 className="text-md font-bold">{plan.name}</h3>
-                {subscription.nextBillingDate && (
+                {subscription.nextBillingDate && subscription.status === 'active' && (
                     <p className="text-sm text-gray-600">
                         Renews: {subscription.nextBillingDate}
                     </p>

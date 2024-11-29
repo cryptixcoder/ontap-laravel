@@ -20,13 +20,13 @@ export default function Navigation() {
                             <a href="https://syncwaretechnologies.com/about" className="uppercase hover:text-primary-700">Agency</a>
                             <a href="https://syncwaretechnologies.com/blog" className="uppercase hover:text-primary-700">Blog</a>
                             <a href="https://syncwaretechnologies.com/photography" className="uppercase hover:text-primary-700">Photography</a>
-                            <Link href="https://ontap.syncwaretechnologies.com" className="uppercase text-primary-700 hover:text-primary-700">OnTap</Link>
-                            <Link href="https://cal.com/syncwaretechnologies/ontap-intro" target='_blank' className="transition ease-in-out duration-75 inline-flex items-center uppercase border-2 border-primary-700 text-primary-700 px-4 py-2 hover:bg-primary-700 hover:text-white">
+                            <a href="https://ontap.syncwaretechnologies.com" className="uppercase text-primary-700 hover:text-primary-700">OnTap</a>
+                            <a href="https://cal.com/syncwaretechnologies/ontap-intro" target='_blank' className="transition ease-in-out duration-75 inline-flex items-center uppercase border-2 border-primary-700 text-primary-700 px-4 py-2 hover:bg-primary-700 hover:text-white">
                                 Book a call
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="ml-2 size-6">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
                                 </svg>
-                            </Link>
+                            </a>
                         </nav>
                         <div className="mr-4 md:-mr-2 flex items-center sm:hidden">
                                 <DisclosureButton className="inline-flex items-center justify-center p-2 rounded-md  hover:text-slate-500 hover:bg-slate-700 focus:outline-none " aria-controls="mobile-menu" aria-expanded="false">
@@ -42,11 +42,11 @@ export default function Navigation() {
                     </div>
                     <DisclosurePanel className="sm:hidden">
                         <div className="pt-2 pb-3 space-y-1">
-                            <Link href="/work" onClick={() => close()} className="block py-2 text-center  font-display text-xl font-medium uppercase hover:underline">Work</Link>
-                            <Link href="/about" onClick={() => close()} className="block py-2 text-center  font-display text-xl font-medium uppercase hover:underline">Agency</Link>
-                            <Link href="/blog" onClick={() => close()} className="block py-2 text-center  font-display text-xl font-medium uppercase hover:underline">Blog</Link>
-                            <Link href="/photography" onClick={() => close()} className="block py-2 text-center  font-display text-xl font-medium uppercase hover:underline">Photography</Link>
-                            {/* <Link href="/on-tap" className="block py-2 text-center  font-display text-xl font-medium uppercase hover:underline">On-Tap</Link> */}
+                            <a href="https://syncwaretechnologies.com/work" onClick={() => close()} className="block py-2 text-center  font-display text-xl font-medium uppercase hover:underline">Work</a>
+                            <a href="https://syncwaretechnologies.com/about" onClick={() => close()} className="block py-2 text-center  font-display text-xl font-medium uppercase hover:underline">Agency</a>
+                            <a href="https://syncwaretechnologies.com/blog" onClick={() => close()} className="block py-2 text-center  font-display text-xl font-medium uppercase hover:underline">Blog</a>
+                            <a href="https://syncwaretechnologies.com/photography" onClick={() => close()} className="block py-2 text-center  font-display text-xl font-medium uppercase hover:underline">Photography</a>
+                            <a href="https://ontap.syncwaretechnologies.com" className="block py-2 text-center  font-display text-xl font-medium uppercase hover:underline">On-Tap</a>
                         </div>
                     </DisclosurePanel>
                 </>

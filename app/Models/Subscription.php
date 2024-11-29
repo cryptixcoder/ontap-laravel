@@ -49,7 +49,7 @@ class Subscription extends CashierSubscription
     }
 
     public function getRemainingDaysAttribute() {
-        if($this->owner->subscribed()) {
+        if($this->status === 'active') {
             return $this->calculateRemainingDays(now(), Carbon::createFromTimestamp($this->asStripeSubscription()->current_period_end));
         }
 

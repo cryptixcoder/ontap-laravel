@@ -10,7 +10,7 @@ export default function Tasks({ tasks, isSubscribed, isPaused, subscription }:Pa
             header={
                 <div className="flex justify-between items-center">
                     <h2 className="text-xl font-semibold leading-tight text-gray-800">Tasks</h2>
-                    {subscription.status === 'active' && <CreateTaskModal />}
+                    {isSubscribed && !isPaused && <CreateTaskModal />}
                 </div>
             }
         >
@@ -25,14 +25,16 @@ export default function Tasks({ tasks, isSubscribed, isPaused, subscription }:Pa
                     </div>
                 )}
 
-                {subscription.status === 'paused' && (
+                {isPaused && (
                     <div className="max-w-4xl mx-auto my-8">
                         <div className="p-4 bg-white border">
                             <p className="text-center">You're subscription is currently paused.</p>
                         </div>
                     </div>
                 )}
-                {subscription.status === 'active' && (
+
+
+                {isSubscribed && !isPaused && (
                     <div className='w-fit mx-auto'>
                         <div className="w-full h-full">
                             <TaskListContainer tasks={tasks} />

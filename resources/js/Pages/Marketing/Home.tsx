@@ -135,9 +135,9 @@ export default function Home({auth, plans, categories}:PageProps< {plans: Plan[]
                                             </svg>
                                         </Link>
 
-                                        <Link href="/register" className="transition ease-in-out duration-75 inline-flex items-center uppercase border-2 bg-primary-700 text-white border-primary-700 hover:text-primary-700 px-4 py-2 hover:bg-white">
+                                        <a target='_blank' href="https://cal.com/syncwaretechnologies/ontap-intro" className="transition ease-in-out duration-75 inline-flex items-center uppercase border-2 bg-primary-700 text-white border-primary-700 hover:text-primary-700 px-4 py-2 hover:bg-white">
                                             Schedule a Call
-                                        </Link>
+                                        </a>
                                     </div>
                                 </PriceCard>
                             ))}
@@ -197,9 +197,9 @@ export default function Home({auth, plans, categories}:PageProps< {plans: Plan[]
                                                             </svg>
                                                         </Link>
 
-                                                        <Link href="/register" className="transition ease-in-out duration-75 inline-flex items-center uppercase border-2 bg-primary-700 text-white border-primary-700 hover:text-primary-700 px-4 py-2 hover:bg-white">
+                                                        <a target='_blank' href="https://cal.com/syncwaretechnologies/ontap-intro" className="transition ease-in-out duration-75 inline-flex items-center uppercase border-2 bg-primary-700 text-white border-primary-700 hover:text-primary-700 px-4 py-2 hover:bg-white">
                                                             Schedule a Call
-                                                        </Link>
+                                                        </a>
                                                     </div>
                                                 </PriceCard>
                                             ))}
