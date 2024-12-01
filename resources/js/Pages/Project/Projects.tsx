@@ -101,7 +101,7 @@ export default function Projects({ projects, categories, isAdmin }: { projects: 
                         {projects.length === 0 && (
                             <div className="p-4 bg-white border">
                                 <h3 className="font-semibold text-xl text-center mb-4">No Projects</h3>
-                                <p className="text-center">You currently have no active projects. Click &quot;Buy Sprint&quot; button to get started</p>
+                                <p className="text-center">You currently have no active projects. Click &quot;Buy Project Sprint&quot; button to get started</p>
                             </div>
                         )}
 

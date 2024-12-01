@@ -19,6 +19,12 @@ class DevSeeder extends Seeder
             'password' =>'StartT0C0de2024!',
             'role' => 'admin'
         ],
+        [
+            'name' => 'Shai Stovall',
+            'email' => 'shai@syncwaretech.com',
+            'password' =>'PixelPusher2025!',
+            'role' => 'contractor'
+        ],
         // Add more admin users as needed
     ];
 

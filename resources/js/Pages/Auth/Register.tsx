@@ -3,22 +3,37 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 
 export default function Register() {
+    const { url } = usePage();
+    const queryParams = new URLSearchParams(url.split('?')[1]);
+    const action = queryParams.get('action');
+    const id = queryParams.get('id');
+
+    console.log(`action: ${action}`);
+    console.log(`id: ${id}`);
+
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         organizationName: '',
         email: '',
         password: '',
         password_confirmation: '',
+        action: action || '',
+        price_id: id || ''
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
         post(route('register'), {
+            onSuccess: (response) => {
+                if(response?.url) {
+                    window.location.href = response.url;
+                }
+            },
             onFinish: () => reset('password', 'password_confirmation'),
         });
     };
