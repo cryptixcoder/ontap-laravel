@@ -229,7 +229,7 @@ class DevSeeder extends Seeder
                 [
                     'name' => $admin['name'],
                     'password' => Hash::make($admin['password']),
-                    'role' => 'admin'
+                    'role' => $admin['role']
                 ]
             );
         }

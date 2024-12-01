@@ -82,11 +82,17 @@ export default function Dashboard({ projects }: { projects: any[]}) {
               </div>
             </div>
             ) }
-            <div className='mt-8 space-y-4 container mx-auto h-full'>
+            <div className='mt-8 space-y-4 max-w-7xl mx-auto h-full'>
                 <div>
                     <h3 className="font-semibold text-sm mb-4">Assign Projects</h3>
 
                     <div className="space-y-4">
+                        {projects.length === 0 && (
+                            <div className="p-4 bg-white border">
+                                <p className="text-center">You don&lsquo;t have an assigned projects yet.</p>
+                            </div>
+                        )}
+
                         {projects.map((project) => (
                             <Link className="block" href={route('admin.customer.project.show', { organization: project.organization_id, project: project.id })}>
                                 <div className="flex justify-between items-center w-full bg-white border p-4 rounded-md">
