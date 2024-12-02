@@ -11,7 +11,7 @@ export default function Navigation() {
                     <div className="px-4 md:px-0 container max-w-6xl font-oswald">
                         <div className="flex justify-between items-center">
                         <div>
-                            <Link href="/">
+                            <Link href="https://syncwaretechnologies.com">
                                 <img src="/logo.png" alt="" className="h-20" />
                             </Link>
                         </div>
