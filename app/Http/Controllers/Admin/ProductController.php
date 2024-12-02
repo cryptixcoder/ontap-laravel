@@ -16,7 +16,7 @@ class ProductController extends Controller
 
     public function __construct()
     {
-        $this->stripe = new StripeClient(env('STRIPE_SECRET'));
+        $this->stripe = new StripeClient(config('cashier.secret'));
     }
 
     public function index(){
