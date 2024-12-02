@@ -23,10 +23,10 @@ export default function PriceCard({ title, description, price, features, childre
                 </div>
             </div>
             <div className="px-8 border-t pt-4">
-                <h5 className="font-oswald text-2xl -ml-4 mb-2">What&rsquo;s Includes</h5>
+                <h5 className="font-oswald text-xl md:text-2xl -ml-4 mb-4">What&rsquo;s Includes</h5>
                 <ul className="list-disc text-black/30 space-y-2 font-sans">
                     {features.map((feature, index) => (
-                        <li className="uppercase" key={index}>
+                        <li className="uppercase text-md md:text-lg" key={index}>
                             {feature}
                         </li>
                     ))}

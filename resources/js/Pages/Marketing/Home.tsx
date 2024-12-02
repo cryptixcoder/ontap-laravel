@@ -72,28 +72,28 @@ export default function Home({auth, plans, categories}:PageProps< {plans: Plan[]
                     )}
                 </nav>
             </div>
-            <div className="py-[40px]">
+            <div className="md:py-[40px]">
                 <div className="px-4 md:px-0 container max-w-5xl">
-                    <div className="grid grid-cols-1  py-20">
+                    <div className="grid grid-cols-1 md:py-20">
                         <div className="mb-10 md:mb-0">
-                            <h3 className="text-slate-900 text-5xl lg:text-8xl font-oswald font-semibold mb-5 lg:max-w-6xl uppercase"><span className="text-primary-700">OnTap</span> the full service agency now on-tap<span className="text-primary-600">.</span></h3>
-                            <h4 className="text-3xl font-light">Weather is mobile or web UI/UX design, development, or AI Integration we're here to help.</h4>
+                            <h3 className="text-slate-900 text-3xl md:text-5xl lg:text-8xl font-oswald font-semibold mb-5 lg:max-w-6xl uppercase"><span className="text-primary-700">OnTap</span> the full service agency now on-tap<span className="text-primary-600">.</span></h3>
+                            <h4 className="text-xl md:text-3xl font-light">Weather is mobile or web UI/UX design, development, or AI Integration we're here to help.</h4>
                         </div>
                     </div>
                 </div>
-                <div className="grid grid-cols-3 py-4">
-                    <div className="col-span-1 bg-center bg-cover bg-no-repeat py-72" style={{ backgroundImage: `url(/work/01.png)` }}></div>
-                    <div className="col-span-1 bg-center bg-cover bg-no-repeat py-72" style={{ backgroundImage: `url(/work/02.png)` }}></div>
-                    <div className="col-span-1 bg-center bg-cover bg-no-repeat py-72" style={{ backgroundImage: `url(/work/03.png)` }}></div>
-                    <div className="col-span-1 bg-center bg-cover bg-no-repeat py-72" style={{ backgroundImage: `url(/work/04.jpeg)` }}></div>
-                    <div className="col-span-1 bg-center bg-cover bg-no-repeat py-72" style={{ backgroundImage: `url(/work/05.jpeg)` }}></div>
-                    <div className="col-span-1 bg-center bg-cover bg-no-repeat py-72" style={{ backgroundImage: `url(/work/06.png)` }}></div>
+                <div className="grid grid-cols-1 md:grid-cols-3 py-4">
+                    <div className="aspect-square w-full bg-center bg-cover bg-no-repeat" style={{ backgroundImage: `url(/work/01.png)` }}></div>
+                    <div className="aspect-square w-full bg-center bg-cover bg-no-repeat" style={{ backgroundImage: `url(/work/02.png)` }}></div>
+                    <div className="aspect-square w-full bg-center bg-cover bg-no-repeat" style={{ backgroundImage: `url(/work/03.png)` }}></div>
+                    <div className="aspect-square w-full bg-center bg-cover bg-no-repeat" style={{ backgroundImage: `url(/work/04.jpeg)` }}></div>
+                    <div className="aspect-square w-full bg-center bg-cover bg-no-repeat" style={{ backgroundImage: `url(/work/05.jpeg)` }}></div>
+                    <div className="aspect-square w-full bg-center bg-cover bg-no-repeat" style={{ backgroundImage: `url(/work/06.png)` }}></div>
                 </div>
 
                 <div className="py-10 border-y my-[60px]">
                     <div className="px-4 md:px-0 container flex flex-col items-center justify-center">
-                        <h2 className="text-slate-900 text-5xl lg:text-4xl font-oswald font-semibold mb-10 md:mb-8 lg:max-w-4xl uppercase text-center">How Subscriptions Work<span className="text-primary-600">?</span></h2>
-                        <div className="grid grid-cols-3 gap-4">
+                        <h2 className="text-slate-900 text-2xl md:text-5xl lg:text-4xl font-oswald font-semibold mb-10 md:mb-8 lg:max-w-4xl uppercase text-center">How Subscriptions Work<span className="text-primary-600">?</span></h2>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <h3 className="font-oswald text-xl uppercase mb-2 text-center">Step 1: Subscribe to a package</h3>
                                 <p className="text-center font-opensans text-lg font-light">Choose the right subscription plan for your needs.</p>
@@ -113,7 +113,7 @@ export default function Home({auth, plans, categories}:PageProps< {plans: Plan[]
                 <div id="subscriptions" className="px-4 md:px-0 container max-w-5xl mb-20">
                     <div>
                         <div className="mb-10">
-                            <h3 className="text-slate-900 text-5xl lg:text-4xl font-oswald font-semibold mb-10 md:mb-5 lg:max-w-4xl uppercase">
+                            <h3 className="text-slate-900 text-4xl md:text-5xl lg:text-4xl font-oswald font-semibold mb-5 md:mb-5 lg:max-w-4xl uppercase">
                                Ontap Subscriptions<span className="text-primary-600">.</span>
                             </h3>
                             <p className="max-w-lg font-light text-[1.125rem] leading-[1.75rem]">Choose from two subscription packages designed to fit your unique needs, whether you're looking for small ongoing tasks or you need the full agency experience, all with transparent pricing and no hidden fees.</p>
@@ -127,7 +127,7 @@ export default function Home({auth, plans, categories}:PageProps< {plans: Plan[]
                                     description={subscription.description}
                                     features={subscription.features.split(',')}
                                 >
-                                    <div className="mt-2 space-x-4">
+                                    <div className="mt-2 flex flex-col md:flex-row gap-4">
                                          <Link href="/register" className="transition ease-in-out duration-75 inline-flex items-center uppercase border-2 border-primary-700 text-primary-700 px-4 py-2 hover:bg-primary-700 hover:text-white">
                                             Subscribe
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="ml-2 size-6">
@@ -146,8 +146,8 @@ export default function Home({auth, plans, categories}:PageProps< {plans: Plan[]
                 </div>
                 <div className="py-10 border-y my-[60px]">
                     <div className="px-4 md:px-0 container flex flex-col items-center justify-center">
-                        <h2 className="text-slate-900 text-5xl lg:text-4xl font-oswald font-semibold mb-10 md:mb-8 lg:max-w-4xl uppercase text-center">What about Sprints<span className="text-primary-600">?</span></h2>
-                        <div className="grid grid-cols-3 gap-8">
+                        <h2 className="text-slate-900 text-2xl md:text-5xl lg:text-4xl font-oswald font-semibold mb-10 md:mb-8 lg:max-w-4xl uppercase text-center">What about Sprints<span className="text-primary-600">?</span></h2>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                             <div>
                                 <h3 className="font-oswald text-xl uppercase mb-2 text-center">Step 1: Buy a sprint</h3>
                                 <p className="text-center font-opensans text-lg font-light">We crafted our sprints around what most businesses need. Choose the right sprint for you!</p>
@@ -166,7 +166,7 @@ export default function Home({auth, plans, categories}:PageProps< {plans: Plan[]
                 <div id="sprint-packages" className="px-4 md:px-0 container max-w-5xl mb-20">
                     <div>
                         <div className="mb-10">
-                            <h3 className="text-slate-900 text-5xl lg:text-4xl font-oswald font-semibold mb-10 md:mb-5 lg:max-w-4xl uppercase">
+                            <h3 className="text-slate-900 text-4xl md:text-5xl lg:text-4xl font-oswald font-semibold mb-5 md:mb-5 lg:max-w-4xl uppercase">
                                Sprint Packages<span className="text-primary-600">.</span>
                             </h3>
                             <p className="max-w-lg font-light text-[1.125rem] leading-[1.75rem]">Not ready for a subscription or don't need it? We've got you covered. Choose from two flexible packages designed to fit your unique needs, whether you're looking for individual headshots or team photos, all with transparent pricing and no hidden fees.</p>
@@ -189,15 +189,15 @@ export default function Home({auth, plans, categories}:PageProps< {plans: Plan[]
                                                     description={product.description}
                                                     features={product.deliverables.split(',')}
                                                 >
-                                                    <div className="mt-2 space-x-4">
-                                                        <Link href="/register" className="transition ease-in-out duration-75 inline-flex items-center uppercase border-2 border-primary-700 text-primary-700 px-4 py-2 hover:bg-primary-700 hover:text-white">
+                                                   <div className="mt-2 flex flex-col md:flex-row gap-4">
+                                                        <Link href="/register" className="transition ease-in-out duration-75 w-full md:w-auto inline-flex items-center justify-center uppercase border-2 border-primary-700 text-primary-700 px-4 py-2 hover:bg-primary-700 hover:text-white">
                                                             Start Sprint
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="ml-2 size-6">
                                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
                                                             </svg>
                                                         </Link>
 
-                                                        <a target='_blank' href="https://cal.com/syncwaretechnologies/ontap-intro" className="transition ease-in-out duration-75 inline-flex items-center uppercase border-2 bg-primary-700 text-white border-primary-700 hover:text-primary-700 px-4 py-2 hover:bg-white">
+                                                        <a target='_blank' href="https://cal.com/syncwaretechnologies/ontap-intro" className="transition ease-in-out duration-75 w-full md:w-auto inline-flex items-center justify-center uppercase border-2 bg-primary-700 text-white border-primary-700 hover:text-primary-700 px-4 py-2 hover:bg-white">
                                                             Schedule a Call
                                                         </a>
                                                     </div>
@@ -212,7 +212,7 @@ export default function Home({auth, plans, categories}:PageProps< {plans: Plan[]
                 </div>
                 <Testimonials />
                 <div className="px-4 md:px-0 container max-w-3xl mb-20">
-                    <h2 className="text-slate-900 text-5xl lg:text-4xl font-oswald font-semibold mb-10 md:mb-5 lg:max-w-4xl uppercase">Frequently Asked Questions<span className="text-primary-600">.</span></h2>
+                    <h2 className="text-slate-900 text-4xl lg:text-4xl font-oswald font-semibold mb-10 md:mb-5 lg:max-w-4xl uppercase">Frequently Asked Questions<span className="text-primary-600">.</span></h2>
                     <Accordion type="single" collapsible className="w-full">
                         {FAQs.map((faq, index) => (
                             <AccordionItem value={`item-${index}`} key={index}>
