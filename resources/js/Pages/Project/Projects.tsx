@@ -13,6 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs"
 
 import { Head } from '@inertiajs/react';
 import { Button } from '@/Components/ui/button';
+import { ScrollArea } from '@/Components/ui/scroll-area';
 
 type Product = {
     id: string;
@@ -67,21 +68,25 @@ export default function Projects({ projects, categories, isAdmin }: { projects: 
                                         </TabsList>
                                         <div className="mt-4">
                                             {categories.map((cat) => (
-                                                <TabsContent key={cat.id} value={cat.id.toString()} className="space-y-8">
-                                                    {cat.products.map((product) => (
-                                                        <div className="space-y-2 border p-4 rounded-md shadow-sm">
-                                                            <div className="flex items-center justify-between">
-                                                                <h3 className="font-semibold text-lg mb-2">{product.name}</h3>
-                                                                <div>
-                                                                    <p>{formatter.format(product.price)}</p>
+                                                <TabsContent key={cat.id} value={cat.id.toString()} className="">
+                                                    <ScrollArea className="h-[800px] ">
+                                                        <div className="space-y-4">
+                                                            {cat.products.map((product) => (
+                                                                <div className="space-y-2 border p-4 rounded-md shadow-sm">
+                                                                    <div className="flex items-center justify-between">
+                                                                        <h3 className="font-semibold text-lg mb-2">{product.name}</h3>
+                                                                        <div>
+                                                                            <p>{formatter.format(product.price)}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <p className="text-sm text-gray-600">{product.description}</p>
+                                                                    <PurchaseProjectButton productId={product.id}>
+                                                                        {product.name}
+                                                                    </PurchaseProjectButton>
                                                                 </div>
-                                                            </div>
-                                                            <p className="text-sm text-gray-600">{product.description}</p>
-                                                            <PurchaseProjectButton productId={product.id}>
-                                                                {product.name}
-                                                            </PurchaseProjectButton>
+                                                            ))}
                                                         </div>
-                                                    ))}
+                                                    </ScrollArea>
                                                 </TabsContent>
                                             ))}
                                         </div>
