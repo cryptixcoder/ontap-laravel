@@ -11,9 +11,9 @@ export default function Navigation() {
                     <div className="px-4 md:px-0 container max-w-6xl font-oswald">
                         <div className="flex justify-between items-center">
                         <div>
-                            <Link href="https://syncwaretechnologies.com">
+                            <a href="https://syncwaretechnologies.com">
                                 <img src="/logo.png" alt="" className="h-20" />
-                            </Link>
+                            </a>
                         </div>
                         <nav className="hidden sm:flex font-display text-xl space-x-8 items-center">
                             <a href="https://syncwaretechnologies.com/work" className="uppercase hover:text-primary-700">Work</a>
