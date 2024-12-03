@@ -6,6 +6,19 @@
         <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="16x16">
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
+        <meta name="description" content="OnTap is your dedicated productized service designed to provide the exact solutions startups and companies need to scale effectively. From seamless development to innovative design and strategy, we ensure you have what you need—when you need it." />
+        <meta property="og:url" content="https://ontap.syncwaretechnologies.com" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="OnTap - The full service agency now on-tap" />
+        <meta property="og:description" content="OnTap is your dedicated productized service designed to provide the exact solutions startups and companies need to scale effectively. From seamless development to innovative design and strategy, we ensure you have what you need—when you need it." />
+        <meta property="og:image" content="https://ontap.syncwaretechnologies.com/OnTap-Preview.png" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="ontap.syncwaretechnologies.com" />
+        <meta property="twitter:url" content="https://ontap.syncwaretechnologies.com" />
+        <meta name="twitter:title" content="OnTap - The full service agency now on-tap" />
+        <meta name="twitter:description" content="OnTap is your dedicated productized service designed to provide the exact solutions startups and companies need to scale effectively. From seamless development to innovative design and strategy, we ensure you have what you need—when you need it." />
+        <meta name="twitter:image" content="https://ontap.syncwaretechnologies.com/OnTap-Preview.png" />
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
