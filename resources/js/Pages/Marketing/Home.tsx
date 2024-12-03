@@ -48,7 +48,7 @@ type Plan = {
 export default function Home({auth, plans, categories}:PageProps< {plans: Plan[], categories: Category[]}>) {
     return (
         <div className="marketing font-opensans">
-            <Head title="OnTap - A full service agency now on-tap" />
+            <Head title="A full service agency now" />
             <Navigation />
             <div className="container max-w-5xl mx-auto py-4">
                 <div></div>
