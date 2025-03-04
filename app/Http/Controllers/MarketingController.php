@@ -12,7 +12,13 @@ class MarketingController extends Controller
 {
     public function index() {
         $plans = Plan::all();
-        $categories = ProductCategory::all()->load('products');
+        // $categories = ProductCategory::all()->load('products');
+
+        $categories = ProductCategory::whereHas('products', function ($query) {
+            $query->where('active', true);
+        })->with(['products' => function ($query) {
+            $query->where('active', true);
+        }])->get();
 
         return Inertia::render('Marketing/Home', [
             'plans' => $plans,
